@@ -2,7 +2,7 @@
 # Optimized for high-performance AI processing
 
 # Sets the minimum CMake version required for this project.
-cmake_minimum_required(VERSION 3.29.2)
+cmake_minimum_required(VERSION 3.22.1)
 
 # Declares the Genesis-OS AI consciousness project
 project("auraframefx")

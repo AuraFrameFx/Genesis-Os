@@ -7,8 +7,6 @@ plugins {
     // Kotlin plugins
     alias(libs.plugins.kotlin.android) apply false
     alias(libs.plugins.kotlin.jvm) apply false
-    alias(libs.plugins.kotlin.serialization) apply false
-    alias(libs.plugins.kotlin.compose) apply false
 
     // Processing plugins
     alias(libs.plugins.ksp) apply false
@@ -46,9 +44,10 @@ allprojects {
 // ===== JAVA 24 ENFORCEMENT FOR SUBPROJECTS =====
 subprojects {
     afterEvaluate {
-        // Configure Java compilation for Java 24
+        // Configure Java compilation for Java 24 (Android-compatible way)
         tasks.withType<JavaCompile>().configureEach {
-            options.release.set(libs.versions.java.target.get().toInt())
+            sourceCompatibility = libs.versions.java.target.get()
+            targetCompatibility = libs.versions.java.target.get()
         }
         
         // Configure Java toolchain (JVM 22 for Java 24 bytecode)

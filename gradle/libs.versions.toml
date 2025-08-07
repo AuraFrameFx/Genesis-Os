@@ -3,39 +3,49 @@
 java-toolchain = "22"
 java-target = "24"
 java-source = "24"
+embedded = "22"         # Latest embedded version
 
 # ===== CORE BUILD TOOLS =====
-agp = "8.2.0"            # Stable AGP
-gradle = "8.5"          # Stable Gradle compatible with AGP
-kotlin = "1.9.20"       # Stable Kotlin
-ksp = "1.9.20-1.0.14"   # Stable KSP compatible with Kotlin
+agp = "8.12.0"           # Latest AGP version
+gradle = "8.14.3"        # Latest Gradle version
+kotlin = "2.2.0"         # Latest Kotlin with JVM_24 support
+ksp = "2.2.0-2.0.2"      # Latest KSP for Kotlin 2.2.0
 
 # ===== ANDROID SDK VERSIONS =====
-compileSdk = "34"       # Stable SDK
-targetSdk = "34"        # Stable target
-minSdk = "26"           # Conservative minimum
-ndkVersion = "25.2.9519653"    # Stable NDK
-cmakeVersion = "3.22.1"        # Stable CMake version
+compileSdk = "36"        # Latest SDK
+targetSdk = "36"         # Latest target
+minSdk = "33"            # Modern minimum for advanced features
+ndkVersion = "27.2.12479018"    # Latest NDK
+cmakeVersion = "3.22.1"         # Available CMake version
 
 # ===== CODE QUALITY & DOCUMENTATION =====
-dokka = "1.9.10"        # Stable Dokka
+dokka = "2.0.0"         # Latest Dokka 2.0
 spotless = "6.23.3"     # Stable Spotless
 
 # ===== COMPOSE & UI =====
-compose = "1.5.8"       # Stable Compose version
-composeBom = "2023.10.01"  # Stable Compose BOM
-composeCompiler = "1.5.8"  # Matches Compose
-activityCompose = "1.8.2"
+compose = "1.9.7"       # Latest Compose version
+composeBom = "2025.01.00"  # Latest 2025 Compose BOM
+composeCompiler = "1.9.7"  # Latest Compose Compiler 1.9+
+activityCompose = "1.9.3"
 material3 = "1.1.2"
 
 # ===== GOOGLE SERVICES =====
-googleServices = "4.4.0"
-firebaseBom = "32.7.0"  # Stable Firebase BOM
-firebaseCrashlytics = "2.9.9"
-firebasePerf = "1.4.2"
+googleServices = "4.4.2"
+firebaseBom = "33.7.0"  # Latest Firebase BOM
+firebaseCrashlytics = "3.0.2"  # Latest Firebase Crashlytics
+firebasePerf = "2.0.0"  # Latest Firebase Performance
 
-# ===== DEPENDENCY INJECTION =====
-hilt = "2.48.1"         # Stable Hilt
+# ===== DEPENDENCY INJECTION & ANNOTATION PROCESSING =====
+hilt = "2.57"           # Latest Hilt with KSP 2 compatibility
+dagger = "2.57"         # Latest Dagger matching Hilt
+
+# ===== DATABASE & PERSISTENCE =====
+roomVersion = "2.7.2"   # Latest Room with KSP 2 bug fixes
+sqlite = "2.4.0"        # Latest SQLite
+
+# ===== ANDROID ARCHITECTURE COMPONENTS =====
+lifecycle = "2.9.2"     # Latest lifecycle components
+navigation = "2.8.4"    # Latest navigation
 
 # ===== NETWORKING =====
 retrofit = "2.9.0"      # Stable Retrofit
@@ -44,10 +54,6 @@ kotlinxSerialization = "1.6.2"  # Stable serialization
 
 # ===== ASYNC & COROUTINES =====
 kotlinxCoroutines = "1.7.3"  # Stable coroutines
-lifecycle = "2.7.0"          # Stable lifecycle
-
-# ===== DATABASE =====
-roomVersion = "2.6.1"   # Stable Room version
 
 # ===== UTILITIES =====
 timber = "5.0.1"
@@ -69,7 +75,7 @@ coroutinesTest = "1.7.3" # Matching coroutines version
 leakcanary = "2.12"
 
 # ===== API GENERATION =====
-openapi-generator = "7.0.1"
+openapi-generator = "7.14.0"
 
 # ===== XPOSED FRAMEWORK =====
 xposed = "82"
@@ -93,10 +99,10 @@ android-library = { id = "com.android.library", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
-kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 
 # ===== ANNOTATION PROCESSING =====
-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 
 # ===== GOOGLE SERVICES =====

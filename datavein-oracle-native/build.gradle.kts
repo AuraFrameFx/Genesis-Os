@@ -1,11 +1,11 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.compose.compiler)
     alias(libs.plugins.kotlin.serialization)
-    alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.ksp)
     // Temporarily disabled to resolve build issues
     // alias(libs.plugins.hilt.android)
-    // alias(libs.plugins.ksp)
     alias(libs.plugins.dokka)
     alias(libs.plugins.spotless)
 }

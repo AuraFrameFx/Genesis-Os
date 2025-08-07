@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.29.2)
+cmake_minimum_required(VERSION 3.22.1)
 project(CollabCanvasNative)
 
 # Set C++ standard
@@ -48,4 +48,3 @@ set_target_properties(collab-canvas-native PROPERTIES
     VERSION 1.0
     SOVERSION 1
 )
-
