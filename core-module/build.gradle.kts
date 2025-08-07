@@ -26,8 +26,7 @@ android {
         release {
             isMinifyEnabled = false
             proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
             )
         }
     }
@@ -38,7 +37,7 @@ android {
         isCoreLibraryDesugaringEnabled = true
     }
 
-   compileOptions {
+    compileOptions {
         sourceCompatibility = JavaVersion.VERSION_24
         targetCompatibility = JavaVersion.VERSION_24
         isCoreLibraryDesugaringEnabled = true
@@ -56,12 +55,11 @@ android {
     packaging {
         resources {
             excludes += setOf(
-                "/META-INF/{AL2.0,LGPL2.1}",
-                "/META-INF/AL2.0",
-                "/META-INF/LGPL2.1"
+                "/META-INF/{AL2.0,LGPL2.1}", "/META-INF/AL2.0", "/META-INF/LGPL2.1"
             )
         }
     }
+    buildToolsVersion = "36"
 }
 
 kotlin {
@@ -96,9 +94,12 @@ dependencies {
 
     // Hilt
     implementation(libs.hilt.android)
+    implementation(libs.animated.vector.drawable)
+    implementation(libs.appcompat.v7)
+    implementation(libs.design)
     ksp(libs.hilt.compiler)
     implementation(libs.hilt.navigation.compose)
-    
+
     // Networking (for shared API models)
     implementation(libs.retrofit)
     implementation(libs.retrofit.converter.kotlinx.serialization)

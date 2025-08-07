@@ -6,7 +6,6 @@ plugins {
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt.android)
-    alias(libs.plugins.coreLibraryDesugaring)
 }
 
 android {
@@ -15,7 +14,6 @@ android {
 
     defaultConfig {
         minSdk = libs.versions.minSdk.get().toInt()
-        targetSdk = libs.versions.targetSdk.get().toInt()
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -109,6 +107,7 @@ android {
             jniLibs.srcDirs("src/main/jniLibs")
         }
     }
+    buildToolsVersion = "36"
 }
 
 kotlin {
@@ -126,19 +125,20 @@ kotlin {
 }
 
 dependencies {
-    // Project modules (commented out until they exist)
-    // implementation(project(":core-module"))
-    // implementation(project(":secure-comm"))
+     //Project modules (commented out until they exist)
+     implementation(project(":core-module"))
+     implementation(project(":secure-comm"))
 
     // Core AndroidX
     implementation(libs.androidx.core.ktx)
-    implementation(libs.bundles.lifecycle)
+    implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
 
     // Compose - ROM Tools UI
     implementation(platform(libs.androidx.compose.bom))
-    implementation(libs.bundles.compose)
-    implementation(libs.bundles.navigation)
+    implementation(libs.androidx.compose.ui)
+    implementation(libs.androidx.compose.material3)
+    implementation(libs.androidx.compose.ui.tooling.preview)
 
     // Hilt Dependency Injection
     implementation(libs.hilt.android)
@@ -146,17 +146,21 @@ dependencies {
     implementation(libs.hilt.navigation.compose)
 
     // Network & Serialization for ROM downloads/updates
-    implementation(libs.bundles.network)
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.converter.kotlinx.serialization)
+    implementation(libs.okhttp3.logging.interceptor)
+    implementation(libs.kotlinx.serialization.json)
 
     // Room Database for ROM metadata and history
-    implementation(libs.bundles.room)
+    implementation(libs.room.runtime)
+    implementation(libs.room.ktx)
     ksp(libs.room.compiler)
 
     // Security for ROM verification and signing
-    implementation(libs.bundles.security)
+    implementation("androidx.security:security-crypto:1.1.0")
+    implementation("com.google.crypto.tink:tink-android:1.18.0")
 
     // WorkManager for background ROM operations
-    implementation(libs.bundles.work)
 
     // Utilities
     implementation(libs.timber)
@@ -164,18 +168,20 @@ dependencies {
 
     // Core library desugaring
     coreLibraryDesugaring(libs.coreLibraryDesugaring)
-    coreLibraryDesugaring(libs.protobufDesugaring)
 
     // ROM Tools specific dependencies
-    implementation("commons-io:commons-io:2.15.1")
-    implementation("org.apache.commons:commons-compress:1.25.0")
-    implementation("org.tukaani:xz:1.9")
-    implementation("org.conscrypt:conscrypt-android:2.5.2")
+    implementation(libs.commons.io)
+    implementation(libs.commons.compress)
+    implementation(libs.xz)
+    implementation(libs.conscrypt.android)
 
     // Testing
-    testImplementation(libs.bundles.testing.unit)
-    androidTestImplementation(libs.bundles.testing.android)
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.test.ext.junit)
+    androidTestImplementation(libs.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
+    androidTestImplementation(libs.androidx.compose.ui.test.junit4)
+    androidTestImplementation(libs.hilt.android.testing)
     kspAndroidTest(libs.hilt.compiler)
 
     // Debug implementations

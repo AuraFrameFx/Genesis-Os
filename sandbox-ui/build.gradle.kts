@@ -47,6 +47,7 @@ android {
             kotlin.srcDir("build/generated/openapi/src/main/kotlin")
         }
     }
+    buildToolsVersion = "36"
 }
 
 kotlin {

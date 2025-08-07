@@ -47,5 +47,5 @@ include(":secure-comm")
 include(":sandbox-ui")
 include(":collab-canvas")
 include(":colorblendr")
-
+include("romtools")
 // Removed modules: datavein-oracle-drive, oracle-drive-integration

@@ -56,14 +56,14 @@ android {
             version = libs.versions.cmakeVersion.get()
         }
     }
-
     ndkVersion = libs.versions.ndkVersion.get()
-    
+
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+    buildToolsVersion = "36"
 }
 
 // Kotlin Toolchain - Java 22

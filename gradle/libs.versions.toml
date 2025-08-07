@@ -5,80 +5,84 @@ java-target = "24"
 java-source = "24"
 
 # ===== CORE BUILD TOOLS =====
-agp = "8.12.0"          # BLEEDING EDGE - Highest AGP compatible with Gradle 9.0
-gradle = "9.0-milestone-1" # BLEEDING EDGE - Java 24 compatible
-kotlin = "2.2.0"        # BLEEDING EDGE - K2 compiler
-ksp = "2.2.0-2.0.2"     # BLEEDING EDGE - matching Kotlin 2.2.0
+agp = "8.2.0"            # Stable AGP
+gradle = "8.5"          # Stable Gradle compatible with AGP
+kotlin = "1.9.20"       # Stable Kotlin
+ksp = "1.9.20-1.0.14"   # Stable KSP compatible with Kotlin
 
 # ===== ANDROID SDK VERSIONS =====
-compileSdk = "36"       # BLEEDING EDGE - Latest SDK
-targetSdk = "36"        # BLEEDING EDGE
-minSdk = "33"           # BLEEDING EDGE
-ndkVersion = "29.0.13846066"    # BLEEDING EDGE - Latest NDK
-cmakeVersion = "4.0.0"         # LATEST OFFICIAL
+compileSdk = "34"       # Stable SDK
+targetSdk = "34"        # Stable target
+minSdk = "26"           # Conservative minimum
+ndkVersion = "25.2.9519653"    # Stable NDK
+cmakeVersion = "3.22.1"        # Stable CMake version
 
 # ===== CODE QUALITY & DOCUMENTATION =====
-dokka = "2.0.0"         # BLEEDING EDGE - Latest Dokka
-spotless = "7.2.1"      # BLEEDING EDGE
+dokka = "1.9.10"        # Stable Dokka
+spotless = "6.23.3"     # Stable Spotless
 
 # ===== COMPOSE & UI =====
-compose = "1.9.1"       # BLEEDING EDGE
-composeBom = "2025.01.00"  # BLEEDING EDGE
-composeCompiler = "1.6.0" # BLEEDING EDGE - matches Kotlin 2.2.0
-activityCompose = "1.10.1"
-material3 = "1.3.2"
+compose = "1.5.8"       # Stable Compose version
+composeBom = "2023.10.01"  # Stable Compose BOM
+composeCompiler = "1.5.8"  # Matches Compose
+activityCompose = "1.8.2"
+material3 = "1.1.2"
 
 # ===== GOOGLE SERVICES =====
 googleServices = "4.4.0"
-firebaseBom = "33.0.0"  # LATEST AVAILABLE
-firebaseCrashlytics = "3.0.2"
+firebaseBom = "32.7.0"  # Stable Firebase BOM
+firebaseCrashlytics = "2.9.9"
 firebasePerf = "1.4.2"
 
 # ===== DEPENDENCY INJECTION =====
-hilt = "2.57"         # BLEEDING EDGE
+hilt = "2.48.1"         # Stable Hilt
 
 # ===== NETWORKING =====
-retrofit = "3.0.0"     # BLEEDING EDGE - if exists
-okhttp = "5.1.0"       # BLEEDING EDGE - if exists  
-kotlinxSerialization = "1.9.0"  # BLEEDING EDGE
+retrofit = "2.9.0"      # Stable Retrofit
+okhttp = "4.12.0"       # Stable OkHttp
+kotlinxSerialization = "1.6.2"  # Stable serialization
 
 # ===== ASYNC & COROUTINES =====
-kotlinxCoroutines = "1.10.2"  # BLEEDING EDGE
-lifecycle = "2.9.2"          # BLEEDING EDGE
+kotlinxCoroutines = "1.7.3"  # Stable coroutines
+lifecycle = "2.7.0"          # Stable lifecycle
 
 # ===== DATABASE =====
-roomVersion = "2.7.2"   # BLEEDING EDGE - if exists
+roomVersion = "2.6.1"   # Stable Room version
 
 # ===== UTILITIES =====
 timber = "5.0.1"
-coilCompose = "2.4.0"           # LATEST AVAILABLE
-coreLibraryDesugaring = "2.0.0"   # STABLE
-protobufDesugaring = "3.0.0"   # STABLE - Add for protobuf compatibility with desugaring
+coilCompose = "2.5.0"           # Stable
+coreLibraryDesugaring = "2.0.4"   # Stable
+protobufDesugaring = "3.21.12"   # Stable protobuf
 
 # ===== TESTING =====
-junit = "5.10.0"        # STABLE
-mockk = "1.13.12"       # STABLE  
-turbine = "1.1.0"       # STABLE
-espresso = "3.6.1"      # STABLE
-extJunit = "1.2.1"      # STABLE
+junit = "4.13.2"        # Classic stable JUnit
+junitJupiter = "5.10.1"  # Stable Jupiter
+mockk = "1.13.8"        # Stable  
+turbine = "1.0.0"       # Stable
+espresso = "3.5.1"      # Stable
+extJunit = "1.1.5"      # Stable AndroidX test
 archCoreTesting = "2.2.0"
-coroutinesTest = "1.8.1" # STABLE - matching coroutines
+coroutinesTest = "1.7.3" # Matching coroutines version
 
 # ===== DEBUG & ANALYSIS =====
-leakcanary = "2.14"
+leakcanary = "2.12"
 
 # ===== API GENERATION =====
-openapi-generator = "7.14.0"  # BLEEDING EDGE
+openapi-generator = "7.0.1"
 
 # ===== XPOSED FRAMEWORK =====
 xposed = "82"
-lsposed = "1.8.6"       # LATEST AVAILABLE
-yuki = "1.3.4"                   # LATEST AVAILABLE
+lsposed = "1.8.6"
+yuki = "1.2.0"
 
 # ===== LEGACY COMPATIBILITY =====
 accompanist = "0.32.0"
-appcompat = "1.7.1"     # STABLE
-coreKtx = "1.13.1"      # STABLE
+appcompat = "1.6.1"     # Stable
+coreKtx = "1.12.0"      # Stable
+animatedVectorDrawable = "1.1.0"  # Stable
+appcompatV7 = "1.6.1"   # Stable
+design = "1.12.0"       # Stable
 
 [plugins]
 # ===== ANDROID PLUGINS =====
@@ -112,8 +116,8 @@ coreLibraryDesugaring = { id = "com.android.tools.desugar", version.ref = "coreL
 
 [libraries]
 # ===== ANDROIDX CORE =====
-androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
-androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version = "1.7.1" }
+androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version = "1.12.0" }
 androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycle" }
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
 
@@ -128,7 +132,7 @@ androidx-compose-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-te
 androidx-compose-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 
 # ===== NAVIGATION =====
-androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version = "2.9.3" }
+androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version = "2.7.7" }
 
 # ===== HILT DEPENDENCY INJECTION =====
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
@@ -198,6 +202,9 @@ commons-io = { group = "commons-io", name = "commons-io", version = "2.15.1" }
 commons-compress = { group = "org.apache.commons", name = "commons-compress", version = "1.25.0" }
 xz = { group = "org.tukaani", name = "xz", version = "1.9" }
 conscrypt-android = { group = "org.conscrypt", name = "conscrypt-android", version = "2.5.2" }
+animated-vector-drawable = { group = "androidx.vectordrawable", name = "vectordrawable-animated", version.ref = "animatedVectorDrawable" }
+appcompat-v7 = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompatV7" }
+design = { group = "com.google.android.material", name = "material", version.ref = "design" }
 
 [bundles]
 # ===== COMPOSE UI =====
