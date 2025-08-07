@@ -13,9 +13,11 @@ plugins {
 android {
     namespace = "dev.aurakai.auraframefx.oraclenative"
     compileSdk = libs.versions.compileSdk.get().toInt()
+    buildToolsVersion = "36.0.0"
 
     defaultConfig {
         minSdk = libs.versions.minSdk.get().toInt()
+        targetSdk = libs.versions.targetSdk.get().toInt()
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -37,8 +39,8 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_21
-        targetCompatibility = JavaVersion.VERSION_21
+        sourceCompatibility = JavaVersion.toVersion(libs.versions.java.source.get())
+        targetCompatibility = JavaVersion.toVersion(libs.versions.java.target.get())
         isCoreLibraryDesugaringEnabled = true
     }
 
@@ -59,14 +61,13 @@ android {
             kotlin.srcDir("build/generated/openapi/src/main/kotlin")
         }
     }
-    buildToolsVersion = "36"
 }
 
 kotlin {
-    jvmToolchain(21)
+    jvmToolchain(libs.versions.java.toolchain.get().toInt())
 
     compilerOptions {
-        jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_21)
+        jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_24)
         freeCompilerArgs.addAll(
             "-opt-in=kotlin.RequiresOptIn",
             "-Xjvm-default=all"

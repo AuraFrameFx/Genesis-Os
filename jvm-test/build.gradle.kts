@@ -5,15 +5,26 @@ plugins {
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt.android)
-    alias(libs.plugins.dokka) apply
-    alias(libs.plugins.spotless)
 }
+
+android {
+    namespace = "dev.aurakai.auraframefx.jvmtest"
+    compileSdk = libs.versions.compileSdk.get().toInt()
+    defaultConfig {
+        minSdk = libs.versions.minSdk.get().toInt()
+        targetSdk = libs.versions.targetSdk.get().toInt()
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
+    compileOptions {
+        sourceCompatibility = JavaVersion.toVersion(libs.versions.java.source.get())
+        targetCompatibility = JavaVersion.toVersion(libs.versions.java.target.get())
+    }
+}
+
 kotlin {
-    jvmToolchain(24)
+    jvmToolchain(libs.versions.java.toolchain.get().toInt())
 }
 
 dependencies {
-    implementation(libs.yuki) // If defined in libs.versions.toml
-    implementation(libs.lsposed) // If defined in libs.versions.toml
     testImplementation(kotlin("test"))
 }
