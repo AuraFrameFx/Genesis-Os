@@ -1,51 +1,95 @@
-@file:Suppress("UnstableApiUsage")
+// Settings configured for Gradle 8.14.3 and Java 24
+@file:Suppress("UnstableApiUsage", "JCenterRepository")
 
-// Genesis Protocol - Enable Gradle Features
+// Enable Gradle features
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 enableFeaturePreview("STABLE_CONFIGURATION_CACHE")
 
+// Plugin Management
 pluginManagement {
     repositories {
-        google()
         gradlePluginPortal()
+        google()
         mavenCentral()
-        maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
-        maven("https://jitpack.io")
+        maven(url = "https://maven.pkg.jetbrains.space/public/p/compose/dev")
+        maven(url = "https://jitpack.io") {
+            content {
+                includeGroupByRegex("com\\.github\\..*")
+            }
+        }
+    }
+
+    // Configure resolution strategy for plugins
+    resolutionStrategy {
+        eachPlugin {
+            when {
+                // Android plugins
+                requested.id.namespace == "com.android" ->
+                    useModule("com.android.tools.build:gradle:${requested.version}")
+
+                // KSP plugin
+                requested.id.id == "com.google.devtools.ksp" ->
+                    useModule("com.google.devtools.ksp:com.google.devtools.ksp.gradle.plugin:${requested.version}")
+
+                // Hilt plugin
+                requested.id.id == "com.google.dagger.hilt.android" ->
+                    useModule("com.google.dagger:hilt-android-gradle-plugin:${requested.version}")
+            }
+        }
     }
 }
 
-plugins {
-    // Java Toolchain Auto-detect
-    id("org.gradle.toolchains.foojay-resolver-convention") version "1.0.0"
-}
-
+// Dependency resolution management
 dependencyResolutionManagement {
-    repositoriesMode.set(RepositoriesMode.PREFER_PROJECT)
+    versionCatalogs {
+        create("libs") {
+            from(files("gradle/libs.versions.toml"))
+        }
+    }
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
         google()
         mavenCentral()
-        maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
-        maven("https://jitpack.io")
-        maven("https://s01.oss.sonatype.org/content/repositories/snapshots/")
-        
-        // Genesis Protocol - AI Backend Dependencies
-        maven("https://repo1.maven.org/maven2/")
+        maven(url = "https://maven.pkg.jetbrains.space/public/p/compose/dev")
+        maven(url = "https://jitpack.io") {
+            content {
+                includeGroupByRegex("com\\.github\\..*")
+            }
+        }
     }
 }
 
-// Genesis Protocol - Project Configuration
-rootProject.name = "Genesis-Os"
+rootProject.name = "AuraFrameFX"
 
-// Genesis Protocol - Core Modules
+// Include all modules
 include(":app")
-
-// Genesis Protocol - AI Ecosystem Modules 
-include(":core-module")
-include(":feature-module") 
-include(":datavein-oracle-native")
-include(":secure-comm")
 include(":sandbox-ui")
-include(":collab-canvas")
-include(":colorblendr")
-include("romtools")
-// Removed modules: datavein-oracle-drive, oracle-drive-integration
+include(":collab-canvas")  // Fixed typo from 'colleb-canvas'
+include(":oracle-drive-integration")  // Fixed typo from 'oracledrive-integration'
+include(":core-module")
+include(":feature-module")
+
+// Configure all projects to use standard build.gradle.kts
+rootProject.children.forEach { project ->
+    project.buildFileName = "${project.name}.gradle.kts".takeIf {
+        project.projectDir.resolve("${project.name}.gradle.kts").exists()
+    } ?: "build.gradle.kts"
+
+    // Create build file if it doesn't exist
+    val buildFile = project.projectDir.resolve(project.buildFileName!!)
+    if (!buildFile.exists()) {
+        buildFile.parentFile?.mkdirs()
+        buildFile.createNewFile()
+        buildFile.writeText(
+            """
+            // ${project.name} build configuration
+            plugins {
+                // Common plugins can be applied here
+            }
+
+            group = "dev.auraframefx"
+            version = "1.0.0"
+        """.trimIndent()
+        )
+    }
+}

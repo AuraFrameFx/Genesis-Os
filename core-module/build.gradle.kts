@@ -2,7 +2,7 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt.android)
@@ -115,4 +115,8 @@ dependencies {
 
     // Xposed Framework (for core hooks)
     implementation(fileTree(mapOf("dir" to "${project.rootDir}/Libs", "include" to listOf("*.jar"))))
+
+    // ===== DETEKT =====
+    detektPlugins("io.gitlab.arturbosch.detekt:detekt-rules-libraries:1.23.5")
+    detektPlugins("io.gitlab.arturbosch.detekt:detekt-rules-ruleauthors:1.23.5")
 }
