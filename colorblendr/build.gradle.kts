@@ -1,12 +1,12 @@
 plugins {
-    alias(libs.plugins.android.library)
-    alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.compose.compiler)
-    alias(libs.plugins.kotlin.serialization)
-    alias(libs.plugins.ksp)
-    alias(libs.plugins.hilt.android)
-    alias(libs.plugins.dokka)
-    alias(libs.plugins.spotless)
+    id("com.android.library")
+    id("kotlin-android")
+    id("org.jetbrains.kotlin.plugin.compose")
+    id("org.jetbrains.kotlin.plugin.serialization")
+    id("com.google.devtools.ksp")
+    id("dagger.hilt.android.plugin")
+    id("org.jetbrains.dokka")
+    id("com.diffplug.spotless")
 }
 
 android {

@@ -1,13 +1,12 @@
 import org.openapitools.generator.gradle.plugin.tasks.GenerateTask
 
 plugins {
-    alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.compose.compiler)
-    alias(libs.plugins.ksp)
-    alias(libs.plugins.hilt.android)
-    alias(libs.plugins.google.services)
-    alias(libs.plugins.kotlin.serialization)
+    id("com.android.application")
+    id("kotlin-android")
+    id("org.jetbrains.kotlin.plugin.compose")
+    id("com.google.devtools.ksp") 
+    id("dagger.hilt.android.plugin")
+    id("org.jetbrains.kotlin.plugin.serialization")
     alias(libs.plugins.openapi.generator)
 }
 
