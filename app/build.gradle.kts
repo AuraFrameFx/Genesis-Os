@@ -16,6 +16,43 @@ android {
     ndkVersion = libs.versions.ndkVersion.get()
     buildToolsVersion = "36.0.0"
 
+    defaultConfig {
+        applicationId = "dev.aurakai.auraframefx"
+        minSdk = libs.versions.minSdk.get().toInt()
+        targetSdk = libs.versions.targetSdk.get().toInt()
+        versionCode = 1
+        versionName = "1.0.0"
+
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        vectorDrawables {
+            useSupportLibrary = true
+        }
+
+        // ===== XPOSED MODULE CONFIGURATION =====
+        buildConfigField("boolean", "XPOSED_MODULE", "true")
+        buildConfigField("String", "XPOSED_MIN_VERSION", "\"${libs.versions.xposed.get()}\"")
+        resValue("string", "xposed_description", "\"Genesis-OS AI Framework Hooks\"")
+
+        // ===== NATIVE AI PROCESSING =====
+        externalNativeBuild {
+            cmake {
+                cppFlags += "-std=c++17"
+                abiFilters += listOf("arm64-v8a", "armeabi-v7a", "x86_64")
+                arguments += listOf(
+                    "-DANDROID_STL=c++_shared",
+                    "-DCMAKE_VERBOSE_MAKEFILE=ON"
+                )
+                version = libs.versions.cmakeVersion.get()
+            }
+        }
+
+        // ===== NDK CONFIGURATION =====
+        ndk {
+            abiFilters += listOf("arm64-v8a", "armeabi-v7a", "x86_64")
+        }
+    }
+
 // ===== OPENAPI CODE GENERATION =====
     val openapiSpecs = listOf(
         Triple("ai", "ai-api.yml", "dev.aurakai.auraframefx.api.ai"),
@@ -45,138 +82,99 @@ android {
             configFile.set("${rootDir}/openapi-generator-config.json")
         }
         // No dependsOn needed - the task is standalone
+    }
 
-        defaultConfig {
-
-
-            testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-
-            vectorDrawables {
-                useSupportLibrary = true
-            }
-
-            // ===== XPOSED MODULE CONFIGURATION =====
-            buildConfigField("boolean", "XPOSED_MODULE", "true")
-            buildConfigField("String", "XPOSED_MIN_VERSION", "\"${libs.versions.xposed.get()}\"")
-            resValue("string", "xposed_description", "\"Genesis-OS AI Framework Hooks\"")
-
-            // ===== NATIVE AI PROCESSING =====
-            externalNativeBuild {
-                cmake {
-                    cppFlags += "-std=c++17"
-                    abiFilters += listOf("arm64-v8a", "armeabi-v7a", "x86_64")
-                    arguments += listOf(
-                        "-DANDROID_STL=c++_shared",
-                        "-DCMAKE_VERBOSE_MAKEFILE=ON"
-                    )
-                    version = libs.versions.cmakeVersion.get()
-                }
-            }
-
-            // ===== NDK CONFIGURATION =====
-            ndk {
-                abiFilters += listOf("arm64-v8a", "armeabi-v7a", "x86_64")
-            }
+    // ===== BUILD TYPES =====
+    buildTypes {
+        release {
+            isMinifyEnabled = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+            // Enable R8 for release builds
+            isShrinkResources = true
         }
 
-        // ===== BUILD TYPES =====
-        buildTypes {
-            release {
-                isMinifyEnabled = false
-                proguardFiles(
-                    getDefaultProguardFile("proguard-android-optimize.txt"),
-                    "proguard-rules.pro"
-                )
-            }
-            release {
-                isMinifyEnabled = true
-                proguardFiles(
-                    getDefaultProguardFile("proguard-android-optimize.txt"),
-                    "proguard-rules.pro"
-                )
-                // Enable R8 for release builds
-                isShrinkResources = true
-            }
-
-
-            debug {
-                applicationIdSuffix = ".debug"
-                versionNameSuffix = "-debug"
-            }
-
-            // ===== BUILD FEATURES =====
-            buildFeatures {
-                compose = true
-                buildConfig = true
-                prefab = true
-            }
-
-            // ===== COMPOSE CONFIGURATION =====
-            composeOptions {
-                kotlinCompilerExtensionVersion = libs.versions.composeCompiler.get()
-            }
-
-            // ===== EXTERNAL NATIVE BUILD =====
-            externalNativeBuild {
-                cmake {
-                    path = file("src/main/cpp/CMakeLists.txt")
-                    version = libs.versions.cmakeVersion.get()
-                }
-            }
-
-            // ===== PACKAGING OPTIONS (CORRECTED) =====
-            packaging {
-                resources {
-                    excludes += setOf(
-                        "/META-INF/{AL2.0,LGPL2.1}",
-                        "/META-INF/DEPENDENCIES",
-                        "/META-INF/LICENSE",
-                        "/META-INF/LICENSE.txt",
-                        "/META-INF/NOTICE",
-                        "/META-INF/NOTICE.txt",
-                        "META-INF/*.kotlin_module"
-                    )
-                }
-                jniLibs {
-                    useLegacyPackaging = true
-                }
-            }
-
-            // ===== SOURCE SETS - GENERATED API CODE =====
-            sourceSets {
-                getByName("main") {
-                    java.srcDirs(
-                        layout.buildDirectory.dir("generated/openapi/ai/src/main/kotlin"),
-                        layout.buildDirectory.dir("generated/openapi/customization/src/main/kotlin"),
-                        layout.buildDirectory.dir("generated/openapi/genesis/src/main/kotlin"),
-                        layout.buildDirectory.dir("generated/openapi/oracleDrive/src/main/kotlin"),
-                        layout.buildDirectory.dir("generated/openapi/sandbox/src/main/kotlin"),
-                        layout.buildDirectory.dir("generated/openapi/system/src/main/kotlin")
-                    )
-                }
-            }
+        debug {
+            applicationIdSuffix = ".debug"
+            versionNameSuffix = "-debug"
         }
+    }
+
+    // ===== BUILD FEATURES =====
+    buildFeatures {
+        compose = true
+        buildConfig = true
+        prefab = true
+    }
+
+    // ===== COMPOSE CONFIGURATION =====
+    composeOptions {
+        kotlinCompilerExtensionVersion = libs.versions.composeCompiler.get()
+    }
+
+    // ===== EXTERNAL NATIVE BUILD =====
+    externalNativeBuild {
+        cmake {
+            path = file("src/main/cpp/CMakeLists.txt")
+            version = libs.versions.cmakeVersion.get()
+        }
+    }
+
+    // ===== PACKAGING OPTIONS (CORRECTED) =====
+    packaging {
+        resources {
+            excludes += setOf(
+                "/META-INF/{AL2.0,LGPL2.1}",
+                "/META-INF/DEPENDENCIES",
+                "/META-INF/LICENSE",
+                "/META-INF/LICENSE.txt",
+                "/META-INF/NOTICE",
+                "/META-INF/NOTICE.txt",
+                "META-INF/*.kotlin_module"
+            )
+        }
+        jniLibs {
+            useLegacyPackaging = true
+        }
+    }
+
+    // ===== SOURCE SETS - GENERATED API CODE =====
+    sourceSets {
+        getByName("main") {
+            java.srcDirs(
+                layout.buildDirectory.dir("generated/openapi/ai/src/main/kotlin"),
+                layout.buildDirectory.dir("generated/openapi/customization/src/main/kotlin"),
+                layout.buildDirectory.dir("generated/openapi/genesis/src/main/kotlin"),
+                layout.buildDirectory.dir("generated/openapi/oracleDrive/src/main/kotlin"),
+                layout.buildDirectory.dir("generated/openapi/sandbox/src/main/kotlin"),
+                layout.buildDirectory.dir("generated/openapi/system/src/main/kotlin")
+            )
+        }
+    }
+}
 
 // ===== KOTLIN TOOLCHAIN - JVM 22 FOR JAVA 24 TARGET =====
-        kotlin {
-            jvmToolchain(libs.versions.java.toolchain.get().toInt())
-        }
+kotlin {
+    jvmToolchain(libs.versions.java.toolchain.get().toInt())
+}
 
 // ===== BUILD TASK DEPENDENCIES =====
-        afterEvaluate {
-            tasks.named("preBuild") {
-                dependsOn(
-                    "generateAiApiClient",
-                    "generateCustomizationApiClient",
-                    "generateGenesisApiClient",
-                    "generateOracleDriveApiClient",
-                    "generateSandboxApiClient",
-                    "generateSystemApiClient"
-                )
-            }
-        }
+afterEvaluate {
+    tasks.named("preBuild") {
+        dependsOn(
+            "generateAiApiClient",
+            "generateCustomizationApiClient",
+            "generateGenesisApiClient",
+            "generateOracleDriveApiClient",
+            "generateSandboxApiClient",
+            "generateSystemApiClient"
+        )
+    }
+}
 
-        dependencies {
+dependencies {
             // ===== CORE ANDROIDX =====
             implementation(libs.androidx.appcompat)
             implementation(libs.androidx.core.ktx)
@@ -229,13 +227,11 @@ android {
             testImplementation(libs.bundles.testing)
             testRuntimeOnly(libs.junit.engine)
 
-            // ===== ANDROID TESTING =====
-            androidTestImplementation(libs.androidx.test.ext.junit)
-            androidTestImplementation(libs.espresso.core)
-            androidTestImplementation(platform(libs.androidx.compose.bom))
-            androidTestImplementation(libs.androidx.compose.ui.test.junit4)
-            androidTestImplementation(libs.hilt.android.testing)
-            kspAndroidTest(libs.hilt.compiler)
-        }
-    }
+    // ===== ANDROID TESTING =====
+    androidTestImplementation(libs.androidx.test.ext.junit)
+    androidTestImplementation(libs.espresso.core)
+    androidTestImplementation(platform(libs.androidx.compose.bom))
+    androidTestImplementation(libs.androidx.compose.ui.test.junit4)
+    androidTestImplementation(libs.hilt.android.testing)
+    kspAndroidTest(libs.hilt.compiler)
 }
