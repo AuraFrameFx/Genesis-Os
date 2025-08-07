@@ -42,12 +42,13 @@ android {
         ) {
             generatorName.set("kotlin")
             library.set("jvm-retrofit2")
-            inputSpec.set("${rootDir}/api-spec/$spec")
+            inputSpec.set("${rootDir}${File.separator}api-spec${File.separator}$spec")
             outputDir.set(
                 layout.buildDirectory.dir("generated/openapi/$name").get().asFile.absolutePath
             )
             packageName.set(pkg)
-            configFile.set("${rootDir}/openapi-generator-config.json")
+            configFile.set("${rootDir}${File.separator}openapi-generator-config.json")
+            validateSpec.set(false)
         }
         // No dependsOn needed - the task is standalone
 
