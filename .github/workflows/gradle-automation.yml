@@ -1,0 +1,197 @@
+name: Gradle Automation & Build Health
+
+on:
+  schedule:
+    # Run every day at 2 AM UTC
+    - cron: '0 2 * * *'
+  workflow_dispatch:
+  push:
+    paths:
+      - 'gradle/**'
+      - '*.gradle.kts'
+      - 'gradle.properties'
+
+env:
+  GRADLE_OPTS: -Dorg.gradle.daemon=false -Dkotlin.incremental=false
+  JAVA_VERSION: '22'
+
+jobs:
+  gradle-health-check:
+    name: Gradle Health Check
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK ${{ env.JAVA_VERSION }}
+        uses: actions/setup-java@v4
+        with:
+          java-version: ${{ env.JAVA_VERSION }}
+          distribution: 'temurin'
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v3
+        with:
+          gradle-version: wrapper
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Verify Java 24 Configuration
+        run: ./gradlew verifyJava24Configuration --no-daemon
+
+      - name: Check Gradle Dependencies
+        run: ./gradlew dependencies --no-daemon
+
+      - name: Verify Bleeding Edge Setup
+        run: ./gradlew verifyBleedingEdge --no-daemon
+
+      - name: Test Configuration Cache
+        run: ./gradlew help --configuration-cache --no-daemon
+
+      - name: Check Build Scan
+        run: ./gradlew help --scan --no-daemon
+
+  plugin-validation:
+    name: Plugin Compatibility Check
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK ${{ env.JAVA_VERSION }}
+        uses: actions/setup-java@v4
+        with:
+          java-version: ${{ env.JAVA_VERSION }}
+          distribution: 'temurin'
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v3
+        with:
+          gradle-version: wrapper
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Validate Plugin Versions
+        run: |
+          ./gradlew projects --no-daemon
+          ./gradlew tasks --group=verification --no-daemon
+
+      - name: Check Plugin Conflicts
+        run: ./gradlew buildEnvironment --no-daemon
+        continue-on-error: true
+
+  dependency-analysis:
+    name: Dependency Analysis
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK ${{ env.JAVA_VERSION }}
+        uses: actions/setup-java@v4
+        with:
+          java-version: ${{ env.JAVA_VERSION }}
+          distribution: 'temurin'
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v3
+        with:
+          gradle-version: wrapper
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Generate Dependency Report
+        run: ./gradlew dependencyInsight --dependency=kotlin --no-daemon
+        continue-on-error: true
+
+      - name: Check for Dependency Conflicts
+        run: ./gradlew dependencies --configuration=compileClasspath --no-daemon
+        continue-on-error: true
+
+      - name: Upload Dependency Reports
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: dependency-reports
+          path: |
+            **/build/reports/dependencies/
+
+  build-performance:
+    name: Build Performance Analysis
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK ${{ env.JAVA_VERSION }}
+        uses: actions/setup-java@v4
+        with:
+          java-version: ${{ env.JAVA_VERSION }}
+          distribution: 'temurin'
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v3
+        with:
+          gradle-version: wrapper
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Clean Build Performance Test
+        run: |
+          ./gradlew clean --no-daemon
+          time ./gradlew assemble --no-daemon --profile
+
+      - name: Incremental Build Performance Test
+        run: |
+          time ./gradlew assemble --no-daemon --profile
+
+      - name: Upload Build Performance Reports
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: build-performance
+          path: |
+            **/build/reports/profile/
+
+  cache-effectiveness:
+    name: Cache Effectiveness Test
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK ${{ env.JAVA_VERSION }}
+        uses: actions/setup-java@v4
+        with:
+          java-version: ${{ env.JAVA_VERSION }}
+          distribution: 'temurin'
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v3
+        with:
+          gradle-version: wrapper
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Test Configuration Cache
+        run: |
+          ./gradlew clean --no-daemon
+          ./gradlew help --configuration-cache --no-daemon
+          ./gradlew help --configuration-cache --no-daemon
+
+      - name: Test Build Cache
+        run: |
+          ./gradlew clean --no-daemon
+          ./gradlew assemble --build-cache --no-daemon
+          ./gradlew clean --no-daemon
+          ./gradlew assemble --build-cache --no-daemon

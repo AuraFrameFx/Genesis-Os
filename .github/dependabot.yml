@@ -1,0 +1,112 @@
+version: 2
+
+updates:
+  # Gradle Dependencies
+  - package-ecosystem: "gradle"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "04:00"
+    commit-message:
+      prefix: "deps"
+      prefix-development: "deps-dev"
+      include: "scope"
+    reviewers:
+      - "AuraFrameFxDev"
+    assignees:
+      - "AuraFrameFxDev"
+    labels:
+      - "dependencies"
+      - "gradle"
+    open-pull-requests-limit: 10
+    rebase-strategy: "auto"
+    versioning-strategy: "increase"
+    groups:
+      android:
+        patterns:
+          - "androidx.*"
+          - "com.android.*"
+          - "com.google.android.*"
+      kotlin:
+        patterns:
+          - "org.jetbrains.kotlin*"
+          - "org.jetbrains.kotlinx*"
+      compose:
+        patterns:
+          - "androidx.compose*"
+          - "*compose*"
+      firebase:
+        patterns:
+          - "com.google.firebase*"
+          - "firebase*"
+      testing:
+        patterns:
+          - "*junit*"
+          - "*mockk*"
+          - "*espresso*"
+          - "*turbine*"
+      networking:
+        patterns:
+          - "*retrofit*"
+          - "*okhttp*"
+          - "*serialization*"
+      build-tools:
+        patterns:
+          - "com.android.tools.build*"
+          - "*gradle*"
+          - "*dokka*"
+          - "*spotless*"
+          - "*detekt*"
+
+  # GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "04:00"
+    commit-message:
+      prefix: "ci"
+      include: "scope"
+    reviewers:
+      - "AuraFrameFxDev"
+    assignees:
+      - "AuraFrameFxDev"
+    labels:
+      - "dependencies"
+      - "github-actions"
+    open-pull-requests-limit: 5
+    rebase-strategy: "auto"
+
+  # Docker (if any Dockerfiles exist)
+  - package-ecosystem: "docker"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+    commit-message:
+      prefix: "docker"
+      include: "scope"
+    reviewers:
+      - "AuraFrameFxDev"
+    labels:
+      - "dependencies"
+      - "docker"
+    open-pull-requests-limit: 2
+
+  # NPM (for any potential Node.js dependencies)
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "tuesday"
+    commit-message:
+      prefix: "npm"
+      include: "scope"
+    labels:
+      - "dependencies"
+      - "npm"
+    open-pull-requests-limit: 5
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
