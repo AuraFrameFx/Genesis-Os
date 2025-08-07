@@ -1,0 +1,251 @@
+[versions]
+# ===== JAVA 24 WITH JVM TOOLCHAIN 22 =====
+java-toolchain = "22"
+java-target = "24"
+java-source = "24"
+
+# ===== CORE BUILD TOOLS =====
+agp = "8.12.0"          # BLEEDING EDGE - Highest AGP compatible with Gradle 9.0
+gradle = "9.0-milestone-1" # BLEEDING EDGE - Java 24 compatible
+kotlin = "2.2.0"        # BLEEDING EDGE - K2 compiler
+ksp = "2.2.0-2.0.2"     # BLEEDING EDGE - matching Kotlin 2.2.0
+
+# ===== ANDROID SDK VERSIONS =====
+compileSdk = "36"       # BLEEDING EDGE - Latest SDK
+targetSdk = "36"        # BLEEDING EDGE
+minSdk = "33"           # BLEEDING EDGE
+ndkVersion = "29.0.13846066"    # BLEEDING EDGE - Latest NDK
+cmakeVersion = "4.0.0"         # LATEST OFFICIAL
+
+# ===== CODE QUALITY & DOCUMENTATION =====
+dokka = "2.0.0"         # BLEEDING EDGE - Latest Dokka
+spotless = "7.2.1"      # BLEEDING EDGE
+
+# ===== COMPOSE & UI =====
+compose = "1.9.1"       # BLEEDING EDGE
+composeBom = "2025.01.00"  # BLEEDING EDGE
+composeCompiler = "1.6.0" # BLEEDING EDGE - matches Kotlin 2.2.0
+activityCompose = "1.10.1"
+material3 = "1.3.2"
+
+# ===== GOOGLE SERVICES =====
+googleServices = "4.4.0"
+firebaseBom = "33.0.0"  # LATEST AVAILABLE
+firebaseCrashlytics = "3.0.2"
+firebasePerf = "1.4.2"
+
+# ===== DEPENDENCY INJECTION =====
+hilt = "2.57"         # BLEEDING EDGE
+
+# ===== NETWORKING =====
+retrofit = "3.0.0"     # BLEEDING EDGE - if exists
+okhttp = "5.1.0"       # BLEEDING EDGE - if exists  
+kotlinxSerialization = "1.9.0"  # BLEEDING EDGE
+
+# ===== ASYNC & COROUTINES =====
+kotlinxCoroutines = "1.10.2"  # BLEEDING EDGE
+lifecycle = "2.9.2"          # BLEEDING EDGE
+
+# ===== DATABASE =====
+roomVersion = "2.7.2"   # BLEEDING EDGE - if exists
+
+# ===== UTILITIES =====
+timber = "5.0.1"
+coilCompose = "2.4.0"           # LATEST AVAILABLE
+coreLibraryDesugaring = "2.0.0"   # STABLE
+protobufDesugaring = "3.0.0"   # STABLE - Add for protobuf compatibility with desugaring
+
+# ===== TESTING =====
+junit = "5.10.0"        # STABLE
+mockk = "1.13.12"       # STABLE  
+turbine = "1.1.0"       # STABLE
+espresso = "3.6.1"      # STABLE
+extJunit = "1.2.1"      # STABLE
+archCoreTesting = "2.2.0"
+coroutinesTest = "1.8.1" # STABLE - matching coroutines
+
+# ===== DEBUG & ANALYSIS =====
+leakcanary = "2.14"
+
+# ===== API GENERATION =====
+openapi-generator = "7.14.0"  # BLEEDING EDGE
+
+# ===== XPOSED FRAMEWORK =====
+xposed = "82"
+lsposed = "1.8.6"       # LATEST AVAILABLE
+yuki = "1.3.4"                   # LATEST AVAILABLE
+
+# ===== LEGACY COMPATIBILITY =====
+accompanist = "0.32.0"
+appcompat = "1.7.1"     # STABLE
+coreKtx = "1.13.1"      # STABLE
+
+[plugins]
+# ===== ANDROID PLUGINS =====
+android-application = { id = "com.android.application", version.ref = "agp" }
+android-library = { id = "com.android.library", version.ref = "agp" }
+
+# ===== KOTLIN PLUGINS =====
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+
+# ===== ANNOTATION PROCESSING =====
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
+
+# ===== GOOGLE SERVICES =====
+google-services = { id = "com.google.gms.google-services", version.ref = "googleServices" }
+firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "firebaseCrashlytics" }
+firebase-perf = { id = "com.google.firebase.firebase-perf", version.ref = "firebasePerf" }
+
+# ===== CODE QUALITY =====
+dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }
+spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
+
+# ===== API GENERATION =====
+openapi-generator = { id = "org.openapi.generator", version.ref = "openapi-generator" }
+
+# ===== DESUGARING =====
+coreLibraryDesugaring = { id = "com.android.tools.desugar", version.ref = "coreLibraryDesugaring" }
+
+[libraries]
+# ===== ANDROIDX CORE =====
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycle" }
+androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
+
+# ===== COMPOSE BOM AND UI =====
+androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
+androidx-compose-ui = { group = "androidx.compose.ui", name = "ui" }
+androidx-compose-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
+androidx-compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
+androidx-compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
+androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3" }
+androidx-compose-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
+androidx-compose-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
+
+# ===== NAVIGATION =====
+androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version = "2.9.3" }
+
+# ===== HILT DEPENDENCY INJECTION =====
+hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
+hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "hilt" }
+hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version = "1.2.0" }
+hilt-android-testing = { group = "com.google.dagger", name = "hilt-android-testing", version.ref = "hilt" }
+
+# ===== NETWORKING =====
+retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
+retrofit-converter-kotlinx-serialization = { group = "com.squareup.retrofit2", name = "converter-kotlinx-serialization", version.ref = "retrofit" }
+okhttp3-logging-interceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp" }
+kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinxSerialization" }
+
+# ===== COROUTINES =====
+kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlinxCoroutines" }
+kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "kotlinxCoroutines" }
+
+# ===== UTILITIES =====
+timber = { group = "com.jakewharton.timber", name = "timber", version.ref = "timber" }
+coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coilCompose" }
+coreLibraryDesugaring = { group = "com.android.tools", name = "desugar_jdk_libs", version.ref = "coreLibraryDesugaring" }
+protobuf-desugaring = { group = "com.google.protobuf", name = "protobuf-javalite", version.ref = "protobufDesugaring" }
+
+# ===== ROOM DATABASE =====
+room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "roomVersion" }
+room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "roomVersion" }
+room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "roomVersion" }
+
+# ===== TESTING =====
+junit = { group = "junit", name = "junit", version = "4.13.2" }
+junit-jupiter = { group = "org.junit.jupiter", name = "junit-jupiter", version.ref = "junit" }
+junit-engine = { group = "org.junit.jupiter", name = "junit-jupiter-engine", version.ref = "junit" }
+androidx-test-ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "extJunit" }
+espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso" }
+mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
+turbine = { group = "app.cash.turbine", name = "turbine", version.ref = "turbine" }
+androidx-core-testing = { group = "androidx.arch.core", name = "core-testing", version.ref = "archCoreTesting" }
+kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutinesTest" }
+
+# ===== DEBUG TOOLS =====
+leakcanary-android = { group = "com.squareup.leakcanary", name = "leakcanary-android", version.ref = "leakcanary" }
+
+# ===== FIREBASE =====
+firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebaseBom" }
+firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics-ktx" }
+firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics-ktx" }
+firebase-performance = { group = "com.google.firebase", name = "firebase-perf-ktx" }
+firebase-messaging = { group = "com.google.firebase", name = "firebase-messaging-ktx" }
+firebase-auth = { group = "com.google.firebase", name = "firebase-auth-ktx" }
+firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore-ktx" }
+firebase-storage = { group = "com.google.firebase", name = "firebase-storage-ktx" }
+
+# ===== XPOSED FRAMEWORK =====
+xposed-api = { group = "de.robv.android.xposed", name = "api", version.ref = "xposed" }
+lsposed-api = { group = "io.github.libxposed", name = "api", version.ref = "lsposed" }
+lsposed-service = { group = "io.github.libxposed", name = "service", version.ref = "lsposed" }
+yuki-api = { group = "com.highcapable.yukihookapi", name = "api", version.ref = "yuki" }
+yuki-ksp-xposed = { group = "com.highcapable.yukihookapi", name = "ksp-xposed", version.ref = "yuki" }
+
+# ===== LEGACY SUPPORT =====
+accompanist-pager = { group = "com.google.accompanist", name = "accompanist-pager", version.ref = "accompanist" }
+accompanist-systemuicontroller = { group = "com.google.accompanist", name = "accompanist-systemuicontroller", version.ref = "accompanist" }
+accompanist-permissions = { group = "com.google.accompanist", name = "accompanist-permissions", version.ref = "accompanist" }
+
+# ===== COMPRESSION & I/O =====
+commons-io = { group = "commons-io", name = "commons-io", version = "2.15.1" }
+commons-compress = { group = "org.apache.commons", name = "commons-compress", version = "1.25.0" }
+xz = { group = "org.tukaani", name = "xz", version = "1.9" }
+conscrypt-android = { group = "org.conscrypt", name = "conscrypt-android", version = "2.5.2" }
+
+[bundles]
+# ===== COMPOSE UI =====
+compose = [
+    "androidx-compose-ui",
+    "androidx-compose-ui-graphics", 
+    "androidx-compose-ui-tooling-preview",
+    "androidx-compose-material3"
+]
+
+# ===== NETWORKING =====
+network = [
+    "retrofit",
+    "retrofit-converter-kotlinx-serialization",
+    "okhttp3-logging-interceptor",
+    "kotlinx-serialization-json"
+]
+
+# ===== COROUTINES =====
+coroutines = [
+    "kotlinx-coroutines-core",
+    "kotlinx-coroutines-android"
+]
+
+# ===== TESTING =====
+testing = [
+    "junit-jupiter",
+    "mockk", 
+    "turbine",
+    "androidx-core-testing",
+    "kotlinx-coroutines-test"
+]
+
+# ===== FIREBASE =====
+firebase = [
+    "firebase-analytics",
+    "firebase-crashlytics", 
+    "firebase-performance",
+    "firebase-messaging",
+    "firebase-auth",
+    "firebase-firestore",
+    "firebase-storage"
+]
+
+# ===== XPOSED FRAMEWORK =====
+xposed = [
+    "xposed-api",
+    "lsposed-api", 
+    "lsposed-service",
+    "yuki-api"
+]

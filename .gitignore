@@ -1,0 +1,61 @@
+# OS junk
+.DS_Store
+Thumbs.db
+
+# IDEs
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+
+# Gradle
+.gradle/
+build/
+!*/src/**/build/
+!*/build.gradle.kts
+
+# Build outputs
+**/build/
+**/out/
+
+# Logs
+*.log
+
+# Misc
+*.swp
+*.swo
+*.tmp
+*.bak
+
+# Root scripts and jars
+/*.bat
+!/gradlew.bat
+/*.sh
+!/gradlew
+/*.jar
+
+# Exclude generated and cache files
+**/generated/
+**/.cache/
+
+# Node/npm (if any)
+node_modules/
+
+# Python (if any)
+__pycache__/
+*.pyc
+
+# Exclude secrets
+*.keystore
+*.jks
+*.p12
+*.pem
+*.key
+*.crt
+*.der
+*.json
+
+# Exclude local properties
+local.properties
+
