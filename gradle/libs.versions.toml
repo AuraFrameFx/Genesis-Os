@@ -79,7 +79,7 @@ openapi-generator = "7.14.0"
 
 # ===== XPOSED FRAMEWORK =====
 xposed = "82"
-lsposed = "1.8.6"
+lsposed = "1.0.1"       # Available LibXposed version
 yuki = "1.2.0"
 
 # ===== LEGACY COMPATIBILITY =====
@@ -258,7 +258,5 @@ firebase = [
 # ===== XPOSED FRAMEWORK =====
 xposed = [
     "xposed-api",
-    "lsposed-api", 
-    "lsposed-service",
     "yuki-api"
 ]
