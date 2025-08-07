@@ -14,6 +14,7 @@ android {
 
     defaultConfig {
         minSdk = libs.versions.minSdk.get().toInt()
+        targetSdk = libs.versions.targetSdk.get().toInt()
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
 
@@ -32,14 +33,8 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.valueOf("VERSION_${libs.versions.java.source.get()}")
-        targetCompatibility = JavaVersion.valueOf("VERSION_${libs.versions.java.target.get()}")
-        isCoreLibraryDesugaringEnabled = true
-    }
-
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_24
-        targetCompatibility = JavaVersion.VERSION_24
+        sourceCompatibility = JavaVersion.toVersion(libs.versions.java.source.get())
+        targetCompatibility = JavaVersion.toVersion(libs.versions.java.target.get())
         isCoreLibraryDesugaringEnabled = true
     }
 
@@ -59,16 +54,16 @@ android {
             )
         }
     }
-    buildToolsVersion = "36"
+    buildToolsVersion = "36.0.0"
 }
 
 kotlin {
     jvmToolchain(libs.versions.java.toolchain.get().toInt())
 
     compilerOptions {
-        jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_24)
-        apiVersion.set(org.jetbrains.kotlin.gradle.dsl.KotlinVersion.KOTLIN_2_2)
-        languageVersion.set(org.jetbrains.kotlin.gradle.dsl.KotlinVersion.KOTLIN_2_2)
+        jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.fromTarget(libs.versions.java.target.get()))
+        apiVersion.set(org.jetbrains.kotlin.gradle.dsl.KotlinVersion.fromVersion(libs.versions.kotlin.get()))
+        languageVersion.set(org.jetbrains.kotlin.gradle.dsl.KotlinVersion.fromVersion(libs.versions.kotlin.get()))
 
         freeCompilerArgs.addAll(
             "-Xuse-k2",

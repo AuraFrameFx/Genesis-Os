@@ -15,6 +15,7 @@ plugins {
     // Quality and documentation
     alias(libs.plugins.dokka) apply false
     alias(libs.plugins.spotless) apply false
+    alias(libs.plugins.detekt) apply false
     alias(libs.plugins.openapi.generator) apply false
 
     // Firebase and Google Services
@@ -110,11 +111,11 @@ tasks.register("verifyBleedingEdge") {
     
     doLast {
         println("🚀 BLEEDING EDGE VERIFICATION")
-        println("   Java: 24.0.2")
-        println("   Gradle: 9.0-milestone-1") 
-        println("   Kotlin: 2.2.0 (K2)")
-        println("   AGP: 8.12.0")
-        println("   SDK: 36")
+        println("   Java: ${libs.versions.java.target.get()}")
+        println("   Gradle: ${libs.versions.gradle.get()}")
+        println("   Kotlin: ${libs.versions.kotlin.get()} (K2)")
+        println("   AGP: ${libs.versions.agp.get()}")
+        println("   SDK: ${libs.versions.compileSdk.get()}")
         println("   Strategy: NO COMPROMISES")
         println("✅ All bleeding edge versions active")
     }

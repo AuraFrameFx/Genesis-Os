@@ -1,15 +1,15 @@
 [versions]
-# ===== JAVA 24 WITH JVM TOOLCHAIN 22 =====
-java-toolchain = "17"
-java-target = "17"
-java-source = "17"
+# ===== JAVA 25 WITH JVM TOOLCHAIN 22 =====
+java-toolchain = "22"
+java-target = "24"
+java-source = "24"
 embedded = "17"         # Stable embedded version
 
 # ===== CORE BUILD TOOLS =====
-agp = "7.4.2"            # Stable AGP version
-gradle = "8.14.3"        # Latest Gradle version
-kotlin = "1.9.23"        # Stable Kotlin version compatible with AGP 7.4.2
-ksp = "1.9.23-1.0.20"    # KSP version compatible with Kotlin 1.9.23
+agp = "8.11.0"            # Stable AGP version
+gradle = "9.0.0"        # Latest Gradle version
+kotlin = "2.2.0"        # Stable Kotlin version compatible with AGP 9.0
+ksp = "2.2.0-2.0.2"    # KSP version compatible with Kotlin 2.2.0
 
 # ===== ANDROID SDK VERSIONS =====
 compileSdk = "36"        # Latest SDK
@@ -20,7 +20,8 @@ cmakeVersion = "3.22.1"         # Available CMake version
 
 # ===== CODE QUALITY & DOCUMENTATION =====
 dokka = "2.0.0"         # Latest Dokka 2.0
-spotless = "6.23.3"     # Stable Spotless
+spotless = "7.2.1"     # Stable Spotless
+detekt = "1.23.8"      # Latest Detekt
 
 # ===== COMPOSE & UI =====
 compose = "1.7.6"       # Latest stable Compose version
@@ -32,7 +33,7 @@ material3 = "1.1.2"
 # ===== GOOGLE SERVICES =====
 googleServices = "4.4.2"
 firebaseBom = "33.1.0"  # Firebase BOM matching the matrix
-firebaseCrashlytics = "3.0.2"  # Latest Firebase Crashlytics
+firebaseCrashlyticsPlugin = "3.4.2"  # Latest Firebase Crashlytics Plugin
 firebasePerf = "2.0.0"  # Latest Firebase Performance
 
 # ===== DEPENDENCY INJECTION & ANNOTATION PROCESSING =====
@@ -64,7 +65,7 @@ protobufDesugaring = "3.21.12"   # Stable protobuf
 # ===== TESTING =====
 junit = "4.13.2"        # Classic stable JUnit
 junitJupiter = "5.10.2"  # Jupiter matching the matrix
-mockk = "1.13.8"        # Stable  
+mockk = "1.13.8"        # Stable
 turbine = "1.0.0"       # Stable
 espresso = "3.5.1"      # Stable
 extJunit = "1.1.5"      # Stable AndroidX test
@@ -107,12 +108,13 @@ hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 
 # ===== GOOGLE SERVICES =====
 google-services = { id = "com.google.gms.google-services", version.ref = "googleServices" }
-firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "firebaseCrashlytics" }
+firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "firebaseCrashlyticsPlugin" }
 firebase-perf = { id = "com.google.firebase.firebase-perf", version.ref = "firebasePerf" }
 
 # ===== CODE QUALITY =====
 dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }
 spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
+detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 
 # ===== API GENERATION =====
 openapi-generator = { id = "org.openapi.generator", version.ref = "openapi-generator" }
@@ -123,7 +125,7 @@ coreLibraryDesugaring = { id = "com.android.tools.desugar", version.ref = "coreL
 [libraries]
 # ===== ANDROIDX CORE =====
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version = "1.7.1" }
-androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version = "1.12.0" }
+androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycle" }
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
 
@@ -133,12 +135,13 @@ androidx-compose-ui = { group = "androidx.compose.ui", name = "ui" }
 androidx-compose-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
 androidx-compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 androidx-compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
+androidx-compose-material = { group = "androidx.compose.material", name = "material" }
 androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3" }
 androidx-compose-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-compose-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 
 # ===== NAVIGATION =====
-androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version = "2.7.7" }
+androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigation" }
 
 # ===== HILT DEPENDENCY INJECTION =====
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
@@ -168,9 +171,8 @@ room-compiler = { group = "androidx.room", name = "room-compiler", version.ref =
 room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "roomVersion" }
 
 # ===== TESTING =====
-junit = { group = "junit", name = "junit", version = "4.13.2" }
-junit-jupiter = { group = "org.junit.jupiter", name = "junit-jupiter", version.ref = "junitJupiter" }
-junit-engine = { group = "org.junit.jupiter", name = "junit-jupiter-engine", version.ref = "junitJupiter" }
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+junit-jupiter-engine = { group = "org.junit.jupiter", name = "junit-jupiter-engine", version.ref = "junitJupiter" }
 androidx-test-ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "extJunit" }
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso" }
 mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
@@ -216,9 +218,9 @@ design = { group = "com.google.android.material", name = "material", version.ref
 # ===== COMPOSE UI =====
 compose = [
     "androidx-compose-ui",
-    "androidx-compose-ui-graphics", 
+    "androidx-compose-material",
     "androidx-compose-ui-tooling-preview",
-    "androidx-compose-material3"
+    "androidx-navigation-compose"
 ]
 
 # ===== NETWORKING =====
@@ -235,19 +237,27 @@ coroutines = [
     "kotlinx-coroutines-android"
 ]
 
-# ===== TESTING =====
-testing = [
-    "junit-jupiter",
-    "mockk", 
+# ===== UNIT TESTING =====
+testing-unit = [
+    "junit-jupiter-engine",
+    "mockk",
     "turbine",
     "androidx-core-testing",
     "kotlinx-coroutines-test"
 ]
 
+# ===== INSTRUMENTATION TESTING =====
+testing-instrumentation = [
+    "androidx-test-ext-junit",
+    "espresso-core",
+    "androidx-compose-ui-test-junit4",
+    "hilt-android-testing"
+]
+
 # ===== FIREBASE =====
 firebase = [
     "firebase-analytics",
-    "firebase-crashlytics", 
+    "firebase-crashlytics",
     "firebase-performance",
     "firebase-messaging",
     "firebase-auth",

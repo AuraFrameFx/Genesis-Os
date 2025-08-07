@@ -13,7 +13,7 @@ plugins {
 
 android {
     namespace = "dev.aurakai.auraframefx"
-    compileSdk = 36
+    compileSdk = libs.versions.compileSdk.get().toInt()
     ndkVersion = libs.versions.ndkVersion.get()
     buildToolsVersion = "36.0.0"
 
@@ -68,8 +68,8 @@ android {
         Triple("system", "system-api.yml", "dev.aurakai.auraframefx.api.system")
     )
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_24
-        targetCompatibility = JavaVersion.VERSION_24
+        sourceCompatibility = JavaVersion.toVersion(libs.versions.java.source.get())
+        targetCompatibility = JavaVersion.toVersion(libs.versions.java.target.get())
     }
 
     openapiSpecs.forEach { (name, spec, pkg) ->
