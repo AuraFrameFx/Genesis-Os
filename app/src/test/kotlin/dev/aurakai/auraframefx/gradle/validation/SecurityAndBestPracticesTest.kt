@@ -1,8 +1,9 @@
 package dev.aurakai.auraframefx.gradle.validation
 
-import org.junit.Test
+import org.junit.jupiter.api.Test
 import org.junit.Assert.*
-import org.junit.Before
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.BeforeEach
 import java.io.File
 
 /**
@@ -12,7 +13,7 @@ class SecurityAndBestPracticesTest {
 
     private lateinit var tomlContent: String
 
-    @Before
+    @BeforeEach
     fun setUp() {
         val tomlFile = File("gradle/libs.versions.toml")
         tomlContent = tomlFile.readText()
@@ -114,7 +115,7 @@ class SecurityAndBestPracticesTest {
         )
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun `test deprecated libraries have migration strategy`() {
         val deprecatedLibraries = listOf("accompanist")
 

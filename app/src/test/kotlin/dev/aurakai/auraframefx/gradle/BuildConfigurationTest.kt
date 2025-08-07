@@ -1,8 +1,8 @@
 package dev.aurakai.auraframefx.gradle
 
 import org.junit.Assert.assertTrue
-import org.junit.Before
-import org.junit.Test
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 import java.io.File
 
 /**
@@ -17,7 +17,7 @@ class BuildConfigurationTest {
     private lateinit var buildFile: File
     private lateinit var buildContent: String
 
-    @Before
+    @BeforeEach
     fun setup() {
         buildFile = File("app/build.gradle.kts")
         buildContent = if (buildFile.exists()) {
@@ -33,7 +33,7 @@ class BuildConfigurationTest {
         }
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun `test Android configuration values are properly set`() {
         // Test namespace is correctly configured
         assertTrue(
@@ -62,7 +62,7 @@ class BuildConfigurationTest {
         )
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun `test essential plugins are applied`() {
         // Test core Android plugins
         assertTrue(
@@ -91,7 +91,7 @@ class BuildConfigurationTest {
         )
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun `test Firebase plugins are properly configured`() {
         assertTrue(
             "Google Services plugin should be applied",
@@ -107,7 +107,7 @@ class BuildConfigurationTest {
         )
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun `test Compose configuration is correct`() {
         // Test Compose is enabled
         assertTrue(
@@ -128,7 +128,7 @@ class BuildConfigurationTest {
         )
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun `test Java compatibility is set to correct version`() {
         assertTrue(
             "Source compatibility should be Java 21",
@@ -144,7 +144,7 @@ class BuildConfigurationTest {
         )
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun `test NDK configuration is properly set`() {
         assertTrue(
             "NDK version should be specified",
@@ -188,7 +188,7 @@ class BuildConfigurationTest {
         )
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun `test build types are properly configured`() {
         // Test release build type
         assertTrue(
@@ -237,7 +237,7 @@ class BuildConfigurationTest {
         )
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun `test KSP configuration is present`() {
         assertTrue(
             "Room schema location should be configured",
@@ -245,7 +245,7 @@ class BuildConfigurationTest {
         )
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun `test essential dependencies are included`() {
         // Test core Android dependencies
         assertTrue(
@@ -292,7 +292,7 @@ class BuildConfigurationTest {
         )
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun `test Firebase dependencies are configured`() {
         assertTrue(
             "Firebase BOM should be included",
@@ -312,7 +312,7 @@ class BuildConfigurationTest {
         )
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun `test Room database dependencies are configured`() {
         assertTrue(
             "Room Runtime should be included",
@@ -348,7 +348,7 @@ class BuildConfigurationTest {
         )
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun `test Kotlin compiler options are set`() {
         assertTrue(
             "Context receivers should be enabled",
@@ -364,7 +364,7 @@ class BuildConfigurationTest {
         )
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun `test resource configuration is valid`() {
         assertTrue(
             "Vector drawables support library should be enabled",
@@ -380,7 +380,7 @@ class BuildConfigurationTest {
         )
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun `test exclusions are properly configured`() {
         assertTrue(
             "Kotlin stdlib common should be excluded",
@@ -404,7 +404,7 @@ class BuildConfigurationTest {
         )
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun `test version consistency for critical dependencies`() {
         // Since this uses version catalogs, we test that the pattern is consistent
         val libsPattern = Regex("libs\\.[a-zA-Z0-9\\.]+")
@@ -415,7 +415,7 @@ class BuildConfigurationTest {
         )
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun `test build features are enabled`() {
         assertTrue(
             "BuildConfig should be enabled",
@@ -435,7 +435,7 @@ class BuildConfigurationTest {
         )
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun `test multidex configuration`() {
         assertTrue(
             "MultiDex should be enabled",
@@ -443,7 +443,7 @@ class BuildConfigurationTest {
         )
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun `test debug dependencies are properly configured`() {
         assertTrue(
             "Compose UI tooling should be available in debug",
@@ -455,7 +455,7 @@ class BuildConfigurationTest {
         )
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun `test duplicate buildFeatures configuration`() {
         // Check for duplicate buildFeatures blocks
         val buildFeaturesCount = Regex("buildFeatures\\s*\\{").findAll(buildContent).count()
@@ -468,7 +468,7 @@ class BuildConfigurationTest {
         // but we should be aware of them
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun `test plugin application order`() {
         // KSP should be applied before Hilt as noted in the comment
         val kspIndex = buildContent.indexOf("libs.plugins.ksp")
@@ -479,7 +479,7 @@ class BuildConfigurationTest {
         }
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun `test required testing libraries are present`() {
         // Test MockK for unit tests
         assertTrue(
@@ -506,7 +506,7 @@ class BuildConfigurationTest {
         )
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun `test security and encryption dependencies`() {
         assertTrue(
             "Security crypto should be included",
@@ -514,7 +514,7 @@ class BuildConfigurationTest {
         )
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun `test data storage dependencies`() {
         assertTrue(
             "DataStore preferences should be included",
@@ -526,7 +526,7 @@ class BuildConfigurationTest {
         )
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun `test work manager dependency`() {
         assertTrue(
             "WorkManager runtime should be included",
@@ -538,7 +538,7 @@ class BuildConfigurationTest {
         )
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun `test AI and ML dependencies`() {
         assertTrue(
             "Generative AI should be included",
@@ -546,7 +546,7 @@ class BuildConfigurationTest {
         )
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun `test image loading dependency`() {
         assertTrue(
             "Coil Compose should be included",
@@ -554,7 +554,7 @@ class BuildConfigurationTest {
         )
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun `test logging dependency`() {
         assertTrue(
             "Timber should be included",
@@ -562,7 +562,7 @@ class BuildConfigurationTest {
         )
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun `test desugaring configuration`() {
         assertTrue(
             "Core library desugaring should be enabled",

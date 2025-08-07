@@ -1,9 +1,9 @@
 package dev.aurakai.auraframefx.ui.theme
 
-import org.junit.Test
+import org.junit.jupiter.api.Test
 import org.junit.Assert.*
-import org.junit.Before
-import org.junit.After
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.AfterEach
 import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserFactory
 import java.io.StringReader
@@ -25,7 +25,7 @@ class ThemeXmlValidationTest {
     private lateinit var themeXml: String
     private lateinit var document: Document
 
-    @Before
+    @BeforeEach
     fun setUp() {
         // Theme XML content based on the actual file content
         themeXml = """
@@ -50,7 +50,7 @@ class ThemeXmlValidationTest {
         document = builder.parse(ByteArrayInputStream(themeXml.toByteArray()))
     }
 
-    @After
+    @AfterEach
     fun tearDown() {
         // Clean up resources if needed
     }
@@ -92,7 +92,7 @@ class ThemeXmlValidationTest {
         )
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun testXmlHasValidStructureWithResourcesRoot() {
         val rootElement = document.documentElement
         assertEquals("Root element should be 'resources'", "resources", rootElement.tagName)
@@ -125,7 +125,7 @@ class ThemeXmlValidationTest {
         )
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun testThemeContainsRequiredColorAttributes() {
         val itemElements = document.getElementsByTagName("item")
         val itemNames = mutableListOf<String>()
@@ -165,7 +165,7 @@ class ThemeXmlValidationTest {
         }
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun testStatusBarColorIsProperlyConfigured() {
         val itemElements = document.getElementsByTagName("item")
         var statusBarColorFound = false
@@ -185,7 +185,7 @@ class ThemeXmlValidationTest {
         assertTrue("Status bar color should be configured", statusBarColorFound)
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun testThemeHasNoDuplicateItemNames() {
         val itemElements = document.getElementsByTagName("item")
         val itemNames = mutableListOf<String>()
@@ -329,7 +329,7 @@ class ThemeXmlValidationTest {
         )
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun testThemeNameFollowsAndroidNamingConventions() {
         val styleElements = document.getElementsByTagName("style")
         val themeStyle = styleElements.item(0) as Element
@@ -498,7 +498,7 @@ class ThemeXmlValidationTest {
         assertTrue("All tags should be properly closed", elementStack.isEmpty())
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun testThemeContainsOnlyValidItemElements() {
         val itemElements = document.getElementsByTagName("item")
 

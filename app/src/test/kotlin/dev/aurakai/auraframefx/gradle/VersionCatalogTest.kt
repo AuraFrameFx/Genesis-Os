@@ -1,8 +1,9 @@
 package dev.aurakai.auraframefx.gradle
 
-import org.junit.Test
+import org.junit.jupiter.api.Test
 import org.junit.Assert.*
-import org.junit.Before
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.BeforeEach
 import java.io.File
 
 /**
@@ -14,7 +15,7 @@ class VersionCatalogTest {
 
     private lateinit var buildContent: String
 
-    @Before
+    @BeforeEach
     fun setup() {
         val buildFile = File("app/build.gradle.kts")
         buildContent = if (buildFile.exists()) {
@@ -294,7 +295,7 @@ class VersionCatalogTest {
         }
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun `test implementation vs api usage patterns`() {
         val apiCount = Regex("api\\s*\\(").findAll(buildContent).count()
         val implementationCount = Regex("implementation\\s*\\(").findAll(buildContent).count()

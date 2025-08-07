@@ -4,8 +4,7 @@ plugins {
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.ksp)
-    // Temporarily disabled to resolve build issues
-    // alias(libs.plugins.hilt.android)
+    alias(libs.plugins.hilt.android)
     alias(libs.plugins.dokka)
     alias(libs.plugins.spotless)
 }
@@ -40,10 +39,6 @@ android {
         sourceCompatibility = JavaVersion.VERSION_21
         targetCompatibility = JavaVersion.VERSION_21
         isCoreLibraryDesugaringEnabled = true
-    }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.composeCompiler.get()
     }
 
     packaging {
@@ -88,16 +83,15 @@ dependencies {
     implementation(libs.bundles.compose)
     implementation(libs.androidx.navigation.compose)
 
-    // Temporarily disabled Hilt to resolve build issues
-    // implementation(libs.hilt.android)
-    // ksp(libs.hilt.compiler)
-    // implementation(libs.hilt.navigation.compose)
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.compiler)
+    implementation(libs.hilt.navigation.compose)
     
     // Coroutines - Genesis Async Processing  
     implementation(libs.bundles.coroutines)
     
     // Kotlin reflection for KSP (disabled for now)
-    // implementation("org.jetbrains.kotlin:kotlin-reflect:${libs.versions.kotlin.get()}")
+    implementation(libs.kotlin.reflect)
     
     // OpenAPI Generated Code Dependencies
     implementation(libs.retrofit)
@@ -109,7 +103,7 @@ dependencies {
     coreLibraryDesugaring(libs.coreLibraryDesugaring)
 
     // Testing
-    testImplementation(libs.junit)
+    testImplementation(libs.junit.jupiter)
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.espresso.core)
 

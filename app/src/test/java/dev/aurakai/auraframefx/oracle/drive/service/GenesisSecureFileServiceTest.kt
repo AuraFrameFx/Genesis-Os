@@ -10,11 +10,13 @@ import dev.aurakai.genesis.storage.SecureStorage
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
-import org.junit.After
+import org.junit.jupiter.api.AfterEach
 import org.junit.Assert.*
-import org.junit.Before
+import org.junit.jupiter.api.BeforeEach
 import org.junit.Rule
-import org.junit.Test
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.BeforeEach
 import org.junit.runner.RunWith
 import java.io.File
 import javax.inject.Inject
@@ -39,7 +41,7 @@ class GenesisSecureFileServiceTest {
     private val testData = "Test file content".toByteArray()
     private val testDirectory = "test_dir"
 
-    @Before
+    @BeforeEach
     fun setup() {
         hiltRule.inject()
         context = ApplicationProvider.getApplicationContext()
@@ -49,13 +51,13 @@ class GenesisSecureFileServiceTest {
         context.filesDir.listFiles()?.forEach { it.deleteRecursively() }
     }
 
-    @After
+    @AfterEach
     fun tearDown() {
         // Clean up after each test
         context.filesDir.listFiles()?.forEach { it.deleteRecursively() }
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun saveAndReadFile_success() = runTest {
         // Save file
         val saveResult = secureFileService.saveFile(testData, testFileName).first()
@@ -69,7 +71,7 @@ class GenesisSecureFileServiceTest {
         assertArrayEquals(testData, readData)
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun saveFileInSubdirectory_success() = runTest {
         // Save file in subdirectory
         val saveResult = secureFileService.saveFile(
@@ -94,7 +96,7 @@ class GenesisSecureFileServiceTest {
         assertArrayEquals(testData, (readResult as FileOperationResult.Data).data)
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun deleteFile_success() = runTest {
         // Save file
         secureFileService.saveFile(testData, testFileName).first()
@@ -108,7 +110,7 @@ class GenesisSecureFileServiceTest {
         assertFalse(file.exists())
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun listFiles_returnsCorrectFiles() = runTest {
         // Save multiple files
         val fileNames = listOf("file1.txt", "file2.txt", "file3.txt")
@@ -131,7 +133,7 @@ class GenesisSecureFileServiceTest {
         assertEquals("File not found", (readResult as FileOperationResult.Error).message)
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun deleteNonExistentFile_returnsError() = runTest {
         val deleteResult = secureFileService.deleteFile("non_existent.txt")
 

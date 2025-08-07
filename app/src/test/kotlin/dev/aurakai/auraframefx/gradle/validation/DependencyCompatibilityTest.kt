@@ -1,8 +1,9 @@
 package dev.aurakai.auraframefx.gradle.validation
 
-import org.junit.Test
+import org.junit.jupiter.api.Test
 import org.junit.Assert.*
-import org.junit.Before
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.BeforeEach
 import java.io.File
 
 /**
@@ -14,7 +15,7 @@ class DependencyCompatibilityTest {
     private lateinit var tomlContent: String
     private val versionMap = mutableMapOf<String, String>()
 
-    @Before
+    @BeforeEach
     fun setUp() {
         val tomlFile = File("gradle/libs.versions.toml")
         tomlContent = tomlFile.readText()

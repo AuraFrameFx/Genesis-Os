@@ -2,6 +2,7 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.compose.compiler)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt.android)
@@ -34,24 +35,21 @@ android {
         targetCompatibility = JavaVersion.VERSION_24
     }
     kotlinOptions {
-        jvmTarget = "24"
+        jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_24.target
     }
 
     buildFeatures {
         compose = true
     }
-    composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.composeCompiler.get()
-    }
 }
 
 dependencies {
     // Core AndroidX
-    implementation(libs.core.ktx)
-    implementation(libs.lifecycle.runtime.ktx)
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.lifecycle.runtime.ktx)
 
     // Compose
-    implementation(platform(libs.compose.bom))
+    implementation(platform(libs.androidx.compose.bom))
     implementation(libs.bundles.compose)
 
     // Hilt
@@ -75,25 +73,18 @@ dependencies {
     // Android Instrumentation Tests
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.espresso.core)
-    androidTestImplementation(platform(libs.compose.bom))
-    androidTestImplementation(libs.compose.ui.test.junit4)
+    androidTestImplementation(platform(libs.androidx.compose.bom))
+    androidTestImplementation(libs.androidx.compose.ui.test.junit4)
     androidTestImplementation(libs.hilt.android.testing) // For Hilt testing
     kspAndroidTest(libs.hilt.compiler) // For Hilt test components
 
     // Debug implementations
-    debugImplementation(libs.compose.ui.tooling)
-    debugImplementation(libs.compose.ui.test.manifest)
+    debugImplementation(libs.androidx.compose.ui.tooling)
+    debugImplementation(libs.androidx.compose.ui.test.manifest)
 
     // System interaction and documentation (using local JAR files)
     implementation(files("${project.rootDir}/Libs/api-82.jar"))
     implementation(files("${project.rootDir}/Libs/api-82-sources.jar"))
     // Dokka for documentation
     plugins.apply("org.jetbrains.dokka")
-}
-
-plugins {
-    // Genesis Protocol Convention Plugins
-    id("OracleDriveConventionPlugin")
-    id("DocumentationConventionPlugin")
-    id("SecureCommunicationConventionPlugin")
 }

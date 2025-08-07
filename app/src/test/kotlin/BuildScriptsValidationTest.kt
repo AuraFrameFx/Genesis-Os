@@ -1,9 +1,8 @@
-import org.junit.Test
+import org.junit.jupiter.api.Test
 import org.junit.Assert.*
-import org.junit.Before
-import org.junit.After
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.AfterEach
 import io.mockk.*
-import kotlinx.coroutines.test.runTest
 import java.io.File
 import java.util.Properties
 
@@ -19,26 +18,26 @@ class BuildScriptsValidationTest {
     private lateinit var buildFile: File
     private lateinit var gradleProperties: Properties
 
-    @Before
+    @BeforeEach
     fun setup() {
         buildFile = File("app/build.gradle.kts")
         gradleProperties = Properties()
     }
 
-    @After
+    @AfterEach
     fun teardown() {
         clearAllMocks()
     }
 
     // Build Script Structure Tests
-    @Test
+    @org.junit.jupiter.api.Test
     fun `build script file exists and is readable`() {
         assertTrue("Build script should exist", buildFile.exists())
         assertTrue("Build script should be readable", buildFile.canRead())
         assertTrue("Build script should not be empty", buildFile.length() > 0)
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun `build script contains required plugin declarations`() {
         val content = buildFile.readText()
 
@@ -131,7 +130,7 @@ class BuildScriptsValidationTest {
         assertTrue("Should specify NDK version", content.contains("version = \"27.0.12077973\""))
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun `packaging configuration excludes unwanted files`() {
         val content = buildFile.readText()
 
@@ -158,7 +157,7 @@ class BuildScriptsValidationTest {
     }
 
     // Build Types Tests
-    @Test
+    @org.junit.jupiter.api.Test
     fun `release build type configuration is valid`() {
         val content = buildFile.readText()
 
@@ -191,7 +190,7 @@ class BuildScriptsValidationTest {
         )
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun `kotlin compiler options are properly configured`() {
         val content = buildFile.readText()
 
@@ -307,7 +306,7 @@ class BuildScriptsValidationTest {
     }
 
     // Source Sets Tests
-    @Test
+    @org.junit.jupiter.api.Test
     fun `source sets include generated sources`() {
         val content = buildFile.readText()
 
@@ -318,7 +317,7 @@ class BuildScriptsValidationTest {
     }
 
     // Task Dependencies Tests
-    @Test
+    @org.junit.jupiter.api.Test
     fun `task dependencies are correctly configured`() {
         val content = buildFile.readText()
 
@@ -522,7 +521,7 @@ class BuildScriptsValidationTest {
         )
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun `network dependencies are configured`() {
         val content = buildFile.readText()
 
@@ -616,7 +615,7 @@ class BuildScriptsValidationTest {
     }
 
     // Build Script Syntax and Structure Tests
-    @Test
+    @org.junit.jupiter.api.Test
     fun `build script has valid kotlin dsl syntax`() {
         val content = buildFile.readText()
 
@@ -655,7 +654,7 @@ class BuildScriptsValidationTest {
         )
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun `duplicate build features are not defined`() {
         val content = buildFile.readText()
 
@@ -680,7 +679,7 @@ class BuildScriptsValidationTest {
     }
 
     // Integration and Compatibility Tests
-    @Test
+    @org.junit.jupiter.api.Test
     fun `sdk versions are compatible`() {
         val content = buildFile.readText()
 
@@ -742,7 +741,7 @@ class BuildScriptsValidationTest {
     }
 
     // Security and Privacy Tests
-    @Test
+    @org.junit.jupiter.api.Test
     fun `security dependencies are included`() {
         val content = buildFile.readText()
 
@@ -753,7 +752,7 @@ class BuildScriptsValidationTest {
     }
 
     // Additional Dependency Tests
-    @Test
+    @org.junit.jupiter.api.Test
     fun `ui and utility dependencies are configured`() {
         val content = buildFile.readText()
 
@@ -829,7 +828,7 @@ class BuildScriptsValidationTest {
     }
 
     // Coroutines Dependencies Tests
-    @Test
+    @org.junit.jupiter.api.Test
     fun `coroutines dependencies are complete`() {
         val content = buildFile.readText()
 
@@ -855,7 +854,7 @@ class BuildScriptsValidationTest {
     }
 
     // Failure Condition Tests
-    @Test
+    @org.junit.jupiter.api.Test
     fun `build script contains no obvious syntax errors`() {
         val content = buildFile.readText()
 

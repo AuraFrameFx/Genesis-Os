@@ -1,8 +1,9 @@
 package dev.aurakai.auraframefx.gradle.validation
 
-import org.junit.Test
+import org.junit.jupiter.api.Test
 import org.junit.Assert.*
-import org.junit.Before
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.BeforeEach
 import java.io.File
 
 /**
@@ -13,7 +14,7 @@ class AuraFrameSpecificTest {
     private lateinit var tomlContent: String
     private val versionMap = mutableMapOf<String, String>()
 
-    @Before
+    @BeforeEach
     fun setUp() {
         val tomlFile = File("gradle/libs.versions.toml")
         tomlContent = tomlFile.readText()
@@ -34,7 +35,7 @@ class AuraFrameSpecificTest {
         }
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun `test AI and generative dependencies are present`() {
         // Google Generative AI
         val generativeAiVersion = versionMap["generativeai"]
@@ -46,7 +47,7 @@ class AuraFrameSpecificTest {
         )
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun `test Firebase services required for AuraFrame are configured`() {
         val requiredFirebaseServices = listOf(
             "firebase-analytics-ktx",
@@ -65,7 +66,7 @@ class AuraFrameSpecificTest {
         }
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun `test navigation and UI framework versions support AuraFrame requirements`() {
         // Navigation Compose
         val navigationVersion = versionMap["navigationCompose"]
@@ -90,7 +91,7 @@ class AuraFrameSpecificTest {
         )
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun `test data persistence and security libraries are configured`() {
         // Room for local database
         val roomVersion = versionMap["room"]
@@ -111,7 +112,7 @@ class AuraFrameSpecificTest {
         )
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun `test networking and serialization libraries are modern`() {
         // Retrofit for networking
         val retrofitVersion = versionMap["retrofit"]
@@ -127,7 +128,7 @@ class AuraFrameSpecificTest {
         assertNotNull("Kotlin DateTime should be defined", datetimeVersion)
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun `test work manager and background processing support`() {
         val workManagerVersion = versionMap["workManager"]
         assertNotNull("Work Manager should be defined for background tasks", workManagerVersion)
@@ -156,7 +157,7 @@ class AuraFrameSpecificTest {
         assertNotNull("Timber should be defined for logging", timberVersion)
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun `test testing infrastructure supports AuraFrame development`() {
         // Core testing libraries
         assertTrue("JUnit should be configured", tomlContent.contains("testJunit"))
@@ -174,7 +175,7 @@ class AuraFrameSpecificTest {
         assertTrue("Hilt Testing should be configured", tomlContent.contains("hiltAndroidTesting"))
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun `test build and development plugins are properly configured`() {
         val requiredPlugins = listOf(
             "com.android.application",

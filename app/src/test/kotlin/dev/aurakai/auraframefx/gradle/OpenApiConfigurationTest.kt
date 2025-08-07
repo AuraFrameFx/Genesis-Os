@@ -1,8 +1,9 @@
 package dev.aurakai.auraframefx.gradle
 
 import org.junit.Assert.assertTrue
-import org.junit.Before
-import org.junit.Test
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.BeforeEach
 import java.io.File
 
 /**
@@ -14,7 +15,7 @@ class OpenApiConfigurationTest {
 
     private lateinit var buildContent: String
 
-    @Before
+    @BeforeEach
     fun setup() {
         val buildFile = File("app/build.gradle.kts")
         buildContent = if (buildFile.exists()) {
@@ -30,7 +31,7 @@ class OpenApiConfigurationTest {
         }
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun `test OpenAPI spec file path is configured`() {
         assertTrue(
             "OpenAPI spec path should be configured",
@@ -38,7 +39,7 @@ class OpenApiConfigurationTest {
         )
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun `test OpenAPI generator output directory is correct`() {
         assertTrue(
             "Output directory should be in build/generated",
@@ -62,7 +63,7 @@ class OpenApiConfigurationTest {
         )
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun `test OpenAPI generator options are appropriate`() {
         assertTrue(
             "Should use Java 8 date library",
@@ -78,7 +79,7 @@ class OpenApiConfigurationTest {
         )
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun `test OpenAPI generation task dependency`() {
         assertTrue(
             "PreBuild should depend on OpenAPI generation",
@@ -86,7 +87,7 @@ class OpenApiConfigurationTest {
         )
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun `test source sets include generated code`() {
         assertTrue(
             "Generated Kotlin sources should be included",
@@ -94,7 +95,7 @@ class OpenApiConfigurationTest {
         )
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun `test OpenAPI generator is properly configured`() {
         assertTrue(
             "OpenAPI generator name should be kotlin",
@@ -114,7 +115,7 @@ class OpenApiConfigurationTest {
         )
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun `test OpenAPI path handling for cross-platform compatibility`() {
         assertTrue(
             "Should handle Windows paths correctly",
@@ -122,7 +123,7 @@ class OpenApiConfigurationTest {
         )
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun `test OpenAPI configuration options are comprehensive`() {
         val requiredOptions = listOf(
             "dateLibrary",

@@ -1,8 +1,8 @@
 package dev.aurakai.auraframefx.gradle.validation
 
-import org.junit.Test
+import org.junit.jupiter.api.Test
 import org.junit.Assert.*
-import org.junit.Before
+import org.junit.jupiter.api.BeforeEach
 import java.io.File
 
 /**
@@ -14,20 +14,20 @@ class TomlStructureTest {
     private lateinit var tomlFile: File
     private lateinit var tomlContent: String
 
-    @Before
+    @BeforeEach
     fun setUp() {
         tomlFile = File("gradle/libs.versions.toml")
         tomlContent = tomlFile.readText()
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun `test TOML file exists and is readable`() {
         assertTrue("TOML file should exist", tomlFile.exists())
         assertTrue("TOML file should be readable", tomlFile.canRead())
         assertTrue("TOML file should not be empty", tomlContent.isNotEmpty())
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun `test TOML has valid section headers`() {
         val sections = listOf("[versions]", "[libraries]", "[plugins]")
 
@@ -39,7 +39,7 @@ class TomlStructureTest {
         }
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun `test TOML quotes are properly balanced`() {
         val doubleQuotes = tomlContent.count { it == '"' }
         assertTrue(
@@ -48,7 +48,7 @@ class TomlStructureTest {
         )
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun `test TOML bracket syntax is valid`() {
         val openBrackets = tomlContent.count { it == '{' }
         val closeBrackets = tomlContent.count { it == '}' }
@@ -59,7 +59,7 @@ class TomlStructureTest {
         )
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun `test no trailing whitespace on lines`() {
         val linesWithTrailingSpace = tomlContent.lines()
             .mapIndexed { index, line -> index to line }
@@ -85,7 +85,7 @@ class TomlStructureTest {
         }
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun `test sections are in correct order`() {
         val versionsIndex = tomlContent.indexOf("[versions]")
         val librariesIndex = tomlContent.indexOf("[libraries]")
@@ -95,7 +95,7 @@ class TomlStructureTest {
         assertTrue("libraries section should come before plugins", librariesIndex < pluginsIndex)
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun `test key-value pairs have proper syntax`() {
         val kvLines = tomlContent.lines()
             .filter { it.contains("=") && !it.trim().startsWith("#") }
@@ -115,7 +115,7 @@ class TomlStructureTest {
         }
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun `test library definitions use proper dictionary syntax`() {
         val libraryLines = tomlContent.lines()
             .filter { it.contains(" = { ") && !it.trim().startsWith("#") }
@@ -133,7 +133,7 @@ class TomlStructureTest {
         }
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun `test plugin definitions follow expected format`() {
         val pluginLines = tomlContent.lines()
             .filter { it.contains("id = ") && !it.trim().startsWith("#") }

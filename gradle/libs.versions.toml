@@ -1,32 +1,36 @@
 [versions]
 # ===== JAVA 24 WITH JVM TOOLCHAIN 22 =====
 java-toolchain = "22"
+jvmTarget = "24"
+javaVersion = "24"
 java-target = "24"
 java-source = "24"
 embedded = "22"         # Latest embedded version
 
 # ===== CORE BUILD TOOLS =====
 agp = "8.12.0"           # Latest AGP version
-gradle = "8.14.3"        # Latest Gradle version
+gradle = "8.14.3"        # Latest stable Gradle version
 kotlin = "2.2.0"         # Latest Kotlin with JVM_24 support
+kotlinReflect = "2.2.0"
 ksp = "2.2.0-2.0.2"      # Latest KSP for Kotlin 2.2.0
 
 # ===== ANDROID SDK VERSIONS =====
 compileSdk = "36"        # Latest SDK
 targetSdk = "36"         # Latest target
 minSdk = "33"            # Modern minimum for advanced features
-ndkVersion = "27.2.12479018"    # Latest NDK
+ndkVersion = "26.2.11394342"    # Latest NDK
 cmakeVersion = "3.22.1"         # Available CMake version
 
 # ===== CODE QUALITY & DOCUMENTATION =====
 dokka = "2.0.0"         # Latest Dokka 2.0
-spotless = "6.23.3"     # Stable Spotless
+spotless = "7.2.1"     # Stable Spotless
+detekt = "1.23.8"
 
 # ===== COMPOSE & UI =====
-compose = "1.9.7"       # Latest Compose version
-composeBom = "2025.01.00"  # Latest 2025 Compose BOM
-composeCompiler = "1.9.7"  # Latest Compose Compiler 1.9+
-activityCompose = "1.9.3"
+compose = "1.9.0"       # Latest Compose version
+composeBom = "2025.07.00"  # Latest 2025 Compose BOM from Dependabot
+composeCompiler = "1.9.0"  # Latest Compose Compiler 1.9+
+activityCompose = "1.10.1"  # Latest from Dependabot
 material3 = "1.1.2"
 
 # ===== GOOGLE SERVICES =====
@@ -45,49 +49,49 @@ sqlite = "2.4.0"        # Latest SQLite
 
 # ===== ANDROID ARCHITECTURE COMPONENTS =====
 lifecycle = "2.9.2"     # Latest lifecycle components
-navigation = "2.8.4"    # Latest navigation
+navigation = "2.9.3"    # Latest navigation
 
 # ===== NETWORKING =====
-retrofit = "2.9.0"      # Stable Retrofit
-okhttp = "4.12.0"       # Stable OkHttp
-kotlinxSerialization = "1.6.2"  # Stable serialization
+retrofit = "3.0.0"      # Latest Retrofit with kotlinx-serialization support
+okhttp = "5.1.0"       # Stable OkHttp
+kotlinxSerialization = "1.9.0"  # Stable serialization
 
 # ===== ASYNC & COROUTINES =====
-kotlinxCoroutines = "1.7.3"  # Stable coroutines
+kotlinxCoroutines = "1.10.2"  # Stable coroutines
 
 # ===== UTILITIES =====
 timber = "5.0.1"
-coilCompose = "2.5.0"           # Stable
-coreLibraryDesugaring = "2.0.4"   # Stable
+coilCompose = "2.7.0"           # Stable
+coreLibraryDesugaring = "2.1.5"   # Stable
 protobufDesugaring = "3.21.12"   # Stable protobuf
 
 # ===== TESTING =====
-junit = "4.13.2"        # Classic stable JUnit
-junitJupiter = "5.10.1"  # Stable Jupiter
-mockk = "1.13.8"        # Stable  
-turbine = "1.0.0"       # Stable
-espresso = "3.5.1"      # Stable
-extJunit = "1.1.5"      # Stable AndroidX test
+junit = "5.13.4"        # Latest JUnit
+junitJupiter = "5.13.4"  # Stable Jupiter
+mockk = "1.14.5"        # Latest Mockk
+turbine = "1.2.1"       # Latest Turbine
+espresso = "3.7.0"      # Latest from Dependabot
+extJunit = "1.3.0"      # Latest from Dependabot
 archCoreTesting = "2.2.0"
-coroutinesTest = "1.7.3" # Matching coroutines version
+coroutinesTest = "1.10.2" # Matching coroutines version
 
 # ===== DEBUG & ANALYSIS =====
-leakcanary = "2.12"
+leakcanary = "2.14"
 
 # ===== API GENERATION =====
 openapi-generator = "7.14.0"
 
 # ===== XPOSED FRAMEWORK =====
 xposed = "82"
-lsposed = "1.0.1"       # Available LibXposed version
+lsposed = "1.9.2"       # Available LibXposed version
 yuki = "1.2.0"
 
 # ===== LEGACY COMPATIBILITY =====
-accompanist = "0.32.0"
-appcompat = "1.6.1"     # Stable
-coreKtx = "1.12.0"      # Stable
+accompanist = "0.34.0"
+appcompat = "1.7.0"     # Stable
+coreKtx = "1.16.0"      # Stable
 animatedVectorDrawable = "1.1.0"  # Stable
-appcompatV7 = "1.6.1"   # Stable
+appcompatV7 = "1.7.0"   # Stable
 design = "1.12.0"       # Stable
 
 [plugins]
@@ -113,6 +117,7 @@ firebase-perf = { id = "com.google.firebase.firebase-perf", version.ref = "fireb
 # ===== CODE QUALITY =====
 dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }
 spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
+detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 
 # ===== API GENERATION =====
 openapi-generator = { id = "org.openapi.generator", version.ref = "openapi-generator" }
@@ -122,9 +127,15 @@ coreLibraryDesugaring = { id = "com.android.tools.desugar", version.ref = "coreL
 
 [libraries]
 # ===== ANDROIDX CORE =====
-androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version = "1.7.1" }
-androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version = "1.12.0" }
+androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version = "1.7.0" }
+androidx-material = { group = "com.google.android.material", name = "material", version = "1.12.0" }
+androidx-recyclerview = { group = "androidx.recyclerview", name = "recyclerview", version = "1.3.2" }
 androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycle" }
+androidx-lifecycle-viewmodel-ktx = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycle" }
+androidx-lifecycle-viewmodel-compose = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "lifecycle" }
+androidx-lifecycle-livedata-ktx = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "lifecycle" }
+androidx-lifecycle-viewmodel-savedstate = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-savedstate", version.ref = "lifecycle" }
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
 
 # ===== COMPOSE BOM AND UI =====
@@ -138,7 +149,7 @@ androidx-compose-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-te
 androidx-compose-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 
 # ===== NAVIGATION =====
-androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version = "2.7.7" }
+androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version = "2.9.3" }
 
 # ===== HILT DEPENDENCY INJECTION =====
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
@@ -147,6 +158,7 @@ hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-com
 hilt-android-testing = { group = "com.google.dagger", name = "hilt-android-testing", version.ref = "hilt" }
 
 # ===== NETWORKING =====
+kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlinReflect" }
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 retrofit-converter-kotlinx-serialization = { group = "com.squareup.retrofit2", name = "converter-kotlinx-serialization", version.ref = "retrofit" }
 okhttp3-logging-interceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp" }
@@ -168,9 +180,9 @@ room-compiler = { group = "androidx.room", name = "room-compiler", version.ref =
 room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "roomVersion" }
 
 # ===== TESTING =====
-junit = { group = "junit", name = "junit", version = "4.13.2" }
-junit-jupiter = { group = "org.junit.jupiter", name = "junit-jupiter", version.ref = "junit" }
-junit-engine = { group = "org.junit.jupiter", name = "junit-jupiter-engine", version.ref = "junit" }
+junit = { group = "junit", name = "junit", version = "5.13.4" }
+junit-jupiter = { group = "org.junit.jupiter", name = "junit-jupiter", version = "5.13.4" }
+junit-engine = { group = "org.junit.jupiter", name = "junit-jupiter-engine", version = "5.13.4" }
 androidx-test-ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "extJunit" }
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso" }
 mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
@@ -198,10 +210,11 @@ lsposed-service = { group = "io.github.libxposed", name = "service", version.ref
 yuki-api = { group = "com.highcapable.yukihookapi", name = "api", version.ref = "yuki" }
 yuki-ksp-xposed = { group = "com.highcapable.yukihookapi", name = "ksp-xposed", version.ref = "yuki" }
 
-# ===== LEGACY SUPPORT =====
+# ===== LEGACY COMPATIBILITY =====
 accompanist-pager = { group = "com.google.accompanist", name = "accompanist-pager", version.ref = "accompanist" }
 accompanist-systemuicontroller = { group = "com.google.accompanist", name = "accompanist-systemuicontroller", version.ref = "accompanist" }
 accompanist-permissions = { group = "com.google.accompanist", name = "accompanist-permissions", version.ref = "accompanist" }
+accompanist-navigation-animation = { group = "com.google.accompanist", name = "accompanist-navigation-animation", version.ref = "accompanist" }
 
 # ===== COMPRESSION & I/O =====
 commons-io = { group = "commons-io", name = "commons-io", version = "2.15.1" }
@@ -259,4 +272,20 @@ firebase = [
 xposed = [
     "xposed-api",
     "yuki-api"
+]
+
+# ===== LIFECYCLE =====
+lifecycle = [
+    "androidx-lifecycle-runtime-ktx",
+    "androidx-lifecycle-viewmodel-ktx",
+    "androidx-lifecycle-viewmodel-compose",
+    "androidx-lifecycle-livedata-ktx",
+    "androidx-lifecycle-viewmodel-savedstate"
+]
+
+# ===== ACCOMPANIST =====
+accompanist = [
+    "accompanist-systemuicontroller",
+    "accompanist-permissions",
+    "accompanist-navigation-animation"
 ]

@@ -11,9 +11,9 @@ import io.mockk.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.*
-import org.junit.After
-import org.junit.Before
-import org.junit.Test
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
@@ -45,7 +45,7 @@ class AuraDriveServiceTest {
     // System under test
     private lateinit var auraDriveService: AuraDriveService
 
-    @Before
+    @BeforeEach
     fun setUp() {
         // Set up mocks
         mockkStatic(Dispatchers::class)
@@ -72,13 +72,13 @@ class AuraDriveServiceTest {
         auraDriveService.onCreate()
     }
 
-    @After
+    @AfterEach
     fun tearDown() {
         // Clean up
         unmockkAll()
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun `test importFile successful`() = testScope.runTest {
         // When
         val fileId = auraDriveService.importFile(testFileUri)
@@ -89,7 +89,7 @@ class AuraDriveServiceTest {
         verify { mockMemoryVerifier.verifyMemory(testFileContent.size.toLong(), any()) }
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun `test importFile with memory verification failure`() = testScope.runTest {
         // Given
         every { mockMemoryVerifier.verifyMemory(any(), any()) } returns false
@@ -103,7 +103,7 @@ class AuraDriveServiceTest {
         verify { mockMemoryVerifier.verifyMemory(testFileContent.size.toLong(), any()) }
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun `test exportFile successful`() = testScope.runTest {
         // Given
         val destinationUri = mockk<Uri>()
@@ -124,7 +124,7 @@ class AuraDriveServiceTest {
         verify { mockMemoryVerifier.verifyMemory(testData.size.toLong(), testChecksum) }
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun `test exportFile with non-existent file`() = testScope.runTest {
         // Given
         val destinationUri = mockk<Uri>()
@@ -137,7 +137,7 @@ class AuraDriveServiceTest {
         verify(exactly = 0) { mockContentResolver.openOutputStream(any()) }
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun `test verifyFileIntegrity successful`() = testScope.runTest {
         // Given
         val testData = "Test data".toByteArray()
@@ -156,7 +156,7 @@ class AuraDriveServiceTest {
         verify { mockMemoryVerifier.verifyMemory(testData.size.toLong(), testChecksum) }
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun `test verifyFileIntegrity with non-existent file`() = testScope.runTest {
         // When/Then
         assertFailsWith<RemoteException> {
@@ -164,7 +164,7 @@ class AuraDriveServiceTest {
         }
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun `test verifyFileIntegrity with memory verification failure`() = testScope.runTest {
         // Given
         val testData = "Test data".toByteArray()
@@ -184,7 +184,7 @@ class AuraDriveServiceTest {
         assertFalse(result)
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun `test service binding`() {
         // When
         val binder = auraDriveService.onBind(null)
@@ -193,7 +193,7 @@ class AuraDriveServiceTest {
         assertTrue(binder is IAuraDriveService.Stub)
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun `test register and unregister callback`() = testScope.runTest {
         // Given
         val callback = mockk<IAuraDriveCallback>(relaxed = true)

@@ -1,13 +1,12 @@
 package dev.aurakai.auraframefx.gradle
 
-import org.junit.Test
+import org.junit.jupiter.api.Test
 import org.junit.Assert.*
-import org.junit.Before
-import org.junit.After
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.AfterEach
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import java.io.File
-import java.util.Properties
 
 /**
  * Comprehensive unit tests for validating Android Gradle build script configurations.
@@ -23,7 +22,7 @@ class BuildScriptsValidationTest {
     private lateinit var buildGradleContent: String
     private lateinit var projectDir: File
 
-    @Before
+    @BeforeEach
     fun setUp() {
         projectDir = File(".")
         val buildGradleFile = File(projectDir, "app/build.gradle.kts")
@@ -61,7 +60,7 @@ class BuildScriptsValidationTest {
         }
     }
 
-    @After
+    @AfterEach
     fun tearDown() {
         // Clean up any test artifacts if needed
     }
@@ -153,7 +152,7 @@ class BuildScriptsValidationTest {
         )
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun `test application id is correct`() {
         assertTrue(
             "applicationId should match project package",
@@ -251,7 +250,7 @@ class BuildScriptsValidationTest {
         )
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun `test debug build type exists`() {
         assertTrue("Debug build type should exist", buildGradleContent.contains("debug {"))
     }
@@ -313,7 +312,7 @@ class BuildScriptsValidationTest {
 
     // === LINT CONFIGURATION TESTS ===
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun `test lint configuration is comprehensive`() {
         assertTrue("Lint block should exist", buildGradleContent.contains("lint {"))
         assertTrue(

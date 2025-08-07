@@ -17,11 +17,12 @@ import dev.aurakai.auraframefx.ui.animations.KineticIdentityLibrary.EmotionalSta
 import dev.aurakai.auraframefx.ui.animations.KineticIdentityLibrary.FlowDirection
 import dev.aurakai.auraframefx.ui.animations.KineticIdentityLibrary.Particle
 import io.mockk.*
-import kotlinx.coroutines.test.runTest
 import org.junit.Rule
-import org.junit.Test
-import org.junit.Before
-import org.junit.After
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.BeforeEach
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 import kotlin.test.assertNotNull
@@ -48,7 +49,7 @@ class KineticIdentityLibraryTest {
 
     private lateinit var mockTheme: AuraTheme
 
-    @Before
+    @BeforeEach
     fun setup() {
         mockTheme = mockk<AuraTheme>(relaxed = true) {
             every { accentColor } returns Color.Blue
@@ -56,14 +57,14 @@ class KineticIdentityLibraryTest {
         }
     }
 
-    @After
+    @AfterEach
     fun tearDown() {
         clearAllMocks()
     }
 
     // BREATHING ANIMATION TESTS
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun breathingAnimation_rendersSuccessfully() {
         composeTestRule.setContent {
             KineticIdentityLibrary.BreathingAnimation(
@@ -105,7 +106,7 @@ class KineticIdentityLibraryTest {
         composeTestRule.onNodeWithTag("breathing_energetic").assertExists()
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun breathingAnimation_adaptsToEmotionalState_focused() {
         composeTestRule.setContent {
             KineticIdentityLibrary.BreathingAnimation(
@@ -117,7 +118,7 @@ class KineticIdentityLibraryTest {
         composeTestRule.onNodeWithTag("breathing_focused").assertExists()
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun breathingAnimation_adaptsToEmotionalState_stressed() {
         composeTestRule.setContent {
             KineticIdentityLibrary.BreathingAnimation(
@@ -177,7 +178,7 @@ class KineticIdentityLibraryTest {
         composeTestRule.onNodeWithTag("breathing_negative_intensity").assertExists()
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun breathingAnimation_handlesExtremelyHighIntensity() {
         composeTestRule.setContent {
             KineticIdentityLibrary.BreathingAnimation(
@@ -189,7 +190,7 @@ class KineticIdentityLibraryTest {
         composeTestRule.onNodeWithTag("breathing_extreme_intensity").assertExists()
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun breathingAnimation_respectsCustomColor() {
         composeTestRule.setContent {
             KineticIdentityLibrary.BreathingAnimation(
@@ -203,7 +204,7 @@ class KineticIdentityLibraryTest {
 
     // RESPONSIVE GLOW TESTS
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun responsiveGlow_rendersWhenInactive() {
         composeTestRule.setContent {
             KineticIdentityLibrary.ResponsiveGlow(
@@ -244,7 +245,7 @@ class KineticIdentityLibraryTest {
         composeTestRule.onNodeWithTag("glow_null_touch").assertExists()
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun responsiveGlow_handlesStateTransitions() {
         var isActive by mutableStateOf(false)
 
@@ -269,7 +270,7 @@ class KineticIdentityLibraryTest {
         composeTestRule.onNodeWithTag("glow_transition").assertExists()
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun responsiveGlow_respectsIntensityParameter() {
         composeTestRule.setContent {
             KineticIdentityLibrary.ResponsiveGlow(
@@ -284,7 +285,7 @@ class KineticIdentityLibraryTest {
         composeTestRule.onNodeWithTag("glow_intensity").assertExists()
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun responsiveGlow_handlesZeroIntensity() {
         composeTestRule.setContent {
             KineticIdentityLibrary.ResponsiveGlow(
@@ -354,7 +355,7 @@ class KineticIdentityLibraryTest {
         composeTestRule.onNodeWithTag("particle_upward").assertExists()
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun particleFlow_handlesDownwardDirection() {
         composeTestRule.setContent {
             KineticIdentityLibrary.ParticleFlow(
@@ -406,7 +407,7 @@ class KineticIdentityLibraryTest {
         composeTestRule.onNodeWithTag("particle_radial").assertExists()
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun particleFlow_handlesCustomParticleCount() {
         composeTestRule.setContent {
             KineticIdentityLibrary.ParticleFlow(
@@ -445,7 +446,7 @@ class KineticIdentityLibraryTest {
         composeTestRule.onNodeWithTag("particle_large_count").assertExists()
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun particleFlow_respectsIntensityParameter() {
         composeTestRule.setContent {
             KineticIdentityLibrary.ParticleFlow(
@@ -473,7 +474,7 @@ class KineticIdentityLibraryTest {
         composeTestRule.onNodeWithTag("keyboard_not_typing").assertExists()
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun keyboardGlow_rendersWhenTyping() {
         composeTestRule.setContent {
             KineticIdentityLibrary.KeyboardGlow(
@@ -565,7 +566,7 @@ class KineticIdentityLibraryTest {
 
     // PARTICLE DATA CLASS TESTS
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun particle_dataClassFunctionality() {
         val particle = Particle(
             position = Offset(100f, 200f),
@@ -749,7 +750,7 @@ class KineticIdentityLibraryTest {
         composeTestRule.onNodeWithTag("breathing_float_bounds_max").assertExists()
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun responsiveGlow_handlesInfiniteFloatValues() {
         composeTestRule.setContent {
             KineticIdentityLibrary.ResponsiveGlow(
@@ -929,7 +930,7 @@ class KineticIdentityLibraryTest {
 
     // THEME COMPATIBILITY TESTS
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun animations_handleNullAccentColor() {
         val themeWithNullColor = mockk<AuraTheme>(relaxed = true) {
             every { accentColor } returns Color.Unspecified
@@ -948,7 +949,7 @@ class KineticIdentityLibraryTest {
         composeTestRule.onNodeWithTag("glow_null_color").assertExists()
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     fun particleFlow_handlesAllAnimationStyles() {
         AuraTheme.AnimationStyle.values().forEachIndexed { index, style ->
             val themeWithStyle = mockk<AuraTheme>(relaxed = true) {
