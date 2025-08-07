@@ -196,7 +196,7 @@ dependencies {
 // Configure native ROM tools build
 tasks.configureEach {
     if (name.startsWith("externalNativeBuild")) {
-        dependsOn(":copyRomTools")
+        dependsOn("copyRomTools")
     }
 }
 

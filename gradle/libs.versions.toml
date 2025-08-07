@@ -1,15 +1,15 @@
 [versions]
 # ===== JAVA 24 WITH JVM TOOLCHAIN 22 =====
-java-toolchain = "22"
-java-target = "24"
-java-source = "24"
-embedded = "22"         # Latest embedded version
+java-toolchain = "17"
+java-target = "17"
+java-source = "17"
+embedded = "17"         # Stable embedded version
 
 # ===== CORE BUILD TOOLS =====
-agp = "8.12.0"           # Latest AGP version
+agp = "7.4.2"            # Stable AGP version
 gradle = "8.14.3"        # Latest Gradle version
-kotlin = "2.2.0"         # Latest Kotlin with JVM_24 support
-ksp = "2.2.0-2.0.2"      # Latest KSP for Kotlin 2.2.0
+kotlin = "1.9.23"        # Stable Kotlin version compatible with AGP 7.4.2
+ksp = "1.9.23-1.0.20"    # KSP version compatible with Kotlin 1.9.23
 
 # ===== ANDROID SDK VERSIONS =====
 compileSdk = "36"        # Latest SDK
@@ -23,15 +23,15 @@ dokka = "2.0.0"         # Latest Dokka 2.0
 spotless = "6.23.3"     # Stable Spotless
 
 # ===== COMPOSE & UI =====
-compose = "1.9.7"       # Latest Compose version
-composeBom = "2025.01.00"  # Latest 2025 Compose BOM
-composeCompiler = "1.9.7"  # Latest Compose Compiler 1.9+
-activityCompose = "1.9.3"
+compose = "1.7.6"       # Latest stable Compose version
+composeBom = "2024.06.01"  # Compatible Compose BOM
+composeCompiler = "1.7.6"  # Compose Compiler matching compose version
+activityCompose = "1.8.2"
 material3 = "1.1.2"
 
 # ===== GOOGLE SERVICES =====
 googleServices = "4.4.2"
-firebaseBom = "33.7.0"  # Latest Firebase BOM
+firebaseBom = "33.1.0"  # Firebase BOM matching the matrix
 firebaseCrashlytics = "3.0.2"  # Latest Firebase Crashlytics
 firebasePerf = "2.0.0"  # Latest Firebase Performance
 
@@ -40,20 +40,20 @@ hilt = "2.57"           # Latest Hilt with KSP 2 compatibility
 dagger = "2.57"         # Latest Dagger matching Hilt
 
 # ===== DATABASE & PERSISTENCE =====
-roomVersion = "2.7.2"   # Latest Room with KSP 2 bug fixes
+roomVersion = "2.7.0"   # Stable Room version
 sqlite = "2.4.0"        # Latest SQLite
 
 # ===== ANDROID ARCHITECTURE COMPONENTS =====
-lifecycle = "2.9.2"     # Latest lifecycle components
-navigation = "2.8.4"    # Latest navigation
+lifecycle = "2.7.0"     # Stable lifecycle components matching the matrix
+navigation = "2.7.7"    # Navigation matching the matrix
 
 # ===== NETWORKING =====
-retrofit = "2.9.0"      # Stable Retrofit
+retrofit = "2.11.0"      # Latest stable Retrofit with kotlinx-serialization support
 okhttp = "4.12.0"       # Stable OkHttp
 kotlinxSerialization = "1.6.2"  # Stable serialization
 
 # ===== ASYNC & COROUTINES =====
-kotlinxCoroutines = "1.7.3"  # Stable coroutines
+kotlinxCoroutines = "1.8.0"  # Coroutines matching the matrix
 
 # ===== UTILITIES =====
 timber = "5.0.1"
@@ -63,13 +63,13 @@ protobufDesugaring = "3.21.12"   # Stable protobuf
 
 # ===== TESTING =====
 junit = "4.13.2"        # Classic stable JUnit
-junitJupiter = "5.10.1"  # Stable Jupiter
+junitJupiter = "5.10.2"  # Jupiter matching the matrix
 mockk = "1.13.8"        # Stable  
 turbine = "1.0.0"       # Stable
 espresso = "3.5.1"      # Stable
 extJunit = "1.1.5"      # Stable AndroidX test
 archCoreTesting = "2.2.0"
-coroutinesTest = "1.7.3" # Matching coroutines version
+coroutinesTest = "1.8.0" # Matching coroutines version
 
 # ===== DEBUG & ANALYSIS =====
 leakcanary = "2.12"
@@ -169,8 +169,8 @@ room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "roomVers
 
 # ===== TESTING =====
 junit = { group = "junit", name = "junit", version = "4.13.2" }
-junit-jupiter = { group = "org.junit.jupiter", name = "junit-jupiter", version.ref = "junit" }
-junit-engine = { group = "org.junit.jupiter", name = "junit-jupiter-engine", version.ref = "junit" }
+junit-jupiter = { group = "org.junit.jupiter", name = "junit-jupiter", version.ref = "junitJupiter" }
+junit-engine = { group = "org.junit.jupiter", name = "junit-jupiter-engine", version.ref = "junitJupiter" }
 androidx-test-ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "extJunit" }
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso" }
 mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
