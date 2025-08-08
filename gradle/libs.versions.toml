@@ -8,7 +8,7 @@ java-source = "24"
 embedded = "24"         # Latest embedded version
 
 # ===== CORE BUILD TOOLS =====
-agp = "8.12.0"           # Latest AGP version
+agp = "8.13.0-alpha03"   # Bleeding-edge AGP with potential Windows fixes
 gradle = "8.14.3"        # Latest stable Gradle version
 kotlin = "2.2.0"         # Latest Kotlin with JVM_24 support
 kotlinReflect = "2.2.0"

@@ -19,11 +19,9 @@ tasks.named("openApiGenerate") {
 android {
     namespace = "dev.aurakai.auraframefx"
     compileSdk = 36
-    ndkVersion = "29.0.13846066 rc3"
-    buildToolsVersion = "36.0.0"
+    buildToolsVersion = "36"
 
-    // Shorter build directory to avoid Windows path issues
-    buildDir = file("build")
+    // Use default build directory structure
 
 // ===== OPENAPI CODE GENERATION =====
     val openapiSpecs = listOf(
