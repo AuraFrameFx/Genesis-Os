@@ -176,7 +176,7 @@ dependencies {
     implementation(libs.conscrypt.android)
 
     // Testing
-    testImplementation(libs.junit)
+    testImplementation(libs.junit.jupiter)
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
@@ -196,7 +196,7 @@ dependencies {
 // Configure native ROM tools build
 tasks.configureEach {
     if (name.startsWith("externalNativeBuild")) {
-        dependsOn(":copyRomTools")
+        dependsOn("copyRomTools")
     }
 }
 

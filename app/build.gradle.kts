@@ -11,11 +11,19 @@ plugins {
     alias(libs.plugins.openapi.generator)
 }
 
+// Disable default openApiGenerate task - we use custom tasks
+tasks.named("openApiGenerate") {
+    enabled = false
+}
+
 android {
     namespace = "dev.aurakai.auraframefx"
     compileSdk = 36
-    ndkVersion = libs.versions.ndkVersion.get()
+    ndkVersion = "29.0.13846066 rc3"
     buildToolsVersion = "36.0.0"
+
+    // Shorter build directory to avoid Windows path issues
+    buildDir = file("build")
 
 // ===== OPENAPI CODE GENERATION =====
     val openapiSpecs = listOf(
@@ -53,7 +61,11 @@ android {
         // No dependsOn needed - the task is standalone
 
         defaultConfig {
-
+            applicationId = "dev.aurakai.auraframefx"
+            minSdk = 33
+            targetSdk = 36
+            versionCode = 1
+            versionName = "1.0.0"
 
             testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
@@ -115,11 +127,6 @@ android {
                 compose = true
                 buildConfig = true
                 prefab = true
-            }
-
-            // ===== COMPOSE CONFIGURATION =====
-            composeOptions {
-                kotlinCompilerExtensionVersion = libs.versions.composeCompiler.get()
             }
 
             // ===== EXTERNAL NATIVE BUILD =====

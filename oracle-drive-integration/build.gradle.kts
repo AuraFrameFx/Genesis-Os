@@ -34,12 +34,15 @@ android {
         sourceCompatibility = JavaVersion.VERSION_24
         targetCompatibility = JavaVersion.VERSION_24
     }
-    kotlinOptions {
-        jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_24.target
-    }
 
     buildFeatures {
         compose = true
+    }
+}
+
+kotlin {
+    compilerOptions {
+        jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_24)
     }
 }
 
@@ -61,7 +64,7 @@ dependencies {
     implementation(libs.kotlinx.coroutines.android)
 
     // Testing
-    testImplementation(libs.junit)
+    testImplementation(libs.junit.jupiter)
     testImplementation(libs.kotlinx.coroutines.test) // For coroutines testing
     testImplementation(libs.mockk) // For mocking in tests
     testImplementation(libs.turbine) // For testing Kotlin Flows

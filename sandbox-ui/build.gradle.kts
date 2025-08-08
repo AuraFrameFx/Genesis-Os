@@ -38,9 +38,7 @@ android {
         compose = true
     }
 
-    composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.composeCompiler.get()
-    }
+    // Removed deprecated composeOptions - handled by compose.compiler plugin
 
     sourceSets {
         getByName("main") {
@@ -84,7 +82,8 @@ dependencies {
     implementation(files("${project.rootDir}/Libs/api-82-sources.jar"))
 
     // Testing
-    testImplementation(libs.junit)
+    testImplementation(libs.junit.jupiter)
+    testRuntimeOnly(libs.junit.engine)
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.espresso.core)
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)

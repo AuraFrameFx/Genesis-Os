@@ -1,8 +1,6 @@
-@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.compose.compiler)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt.android)
@@ -38,18 +36,9 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_24
-        targetCompatibility = JavaVersion.VERSION_24
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
         isCoreLibraryDesugaringEnabled = true
-    }
-
-    buildFeatures {
-        compose = true
-        buildConfig = true
-    }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.composeCompiler.get()
     }
 
     packaging {
@@ -69,12 +58,11 @@ android {
 }
 
 kotlin {
-    jvmToolchain(22)
+    jvmToolchain(8)
 
     compilerOptions {
-        jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_24)
+        jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_1_8)
         freeCompilerArgs.addAll(
-            "-Xuse-k2",
             "-Xskip-prerelease-check",
             "-opt-in=kotlin.RequiresOptIn",
             "-opt-in=kotlin.ExperimentalStdlibApi",
@@ -88,14 +76,14 @@ dependencies {
     implementation(project(":core-module"))
 
     // Kotlin
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:2.2.0")
+    implementation(libs.kotlin.reflect)
 
     // AndroidX
     implementation(libs.androidx.core.ktx)
 
     // Security
-    implementation("androidx.security:security-crypto:1.1.0")
-    implementation("com.google.crypto.tink:tink-android:1.18.0")
+    implementation(libs.androidxSecurity)
+    implementation(libs.tink)
 
     // Hilt
     implementation(libs.hilt.android)
@@ -105,12 +93,12 @@ dependencies {
     coreLibraryDesugaring(libs.coreLibraryDesugaring)
 
     // Testing
-    testImplementation(libs.junit)
+    testImplementation(libs.junit.jupiter)
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.espresso.core)
 
     // Bouncy Castle for cryptographic operations
-    implementation("org.bouncycastle:bcprov-jdk18on:1.81")
+    implementation(libs.bouncycastle)
 
     // System interaction and documentation (using local JAR files)
     implementation(files("${project.rootDir}/Libs/api-82.jar"))

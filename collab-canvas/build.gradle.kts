@@ -66,9 +66,9 @@ android {
     buildToolsVersion = "36"
 }
 
-// Kotlin Toolchain - Java 22
+// Kotlin Toolchain - Java 24
 kotlin {
-    jvmToolchain(22)
+    jvmToolchain(24)
 }
 
 dependencies {

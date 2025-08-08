@@ -1,18 +1,21 @@
 [versions]
-# ===== JAVA 24 WITH JVM TOOLCHAIN 22 =====
-java-toolchain = "22"
+# ===== JAVA 24 WITH JVM TOOLCHAIN 24 =====
+java-toolchain = "24"
 jvmTarget = "24"
 javaVersion = "24"
 java-target = "24"
 java-source = "24"
-embedded = "22"         # Latest embedded version
+embedded = "24"         # Latest embedded version
 
 # ===== CORE BUILD TOOLS =====
 agp = "8.12.0"           # Latest AGP version
 gradle = "8.14.3"        # Latest stable Gradle version
 kotlin = "2.2.0"         # Latest Kotlin with JVM_24 support
 kotlinReflect = "2.2.0"
-ksp = "2.2.0-2.0.2"      # Latest KSP for Kotlin 2.2.0
+ksp = "2.2.0-2.0.2"      # Correct KSP for Kotlin 2.2.0
+hilt = "2.57"            # Latest Hilt version
+googleServices = "4.4.3" # Google Services plugin
+openApiGenerator = "7.14.0" # OpenAPI Generator plugin
 
 # ===== ANDROID SDK VERSIONS =====
 compileSdk = "36"        # Latest SDK
@@ -29,18 +32,17 @@ detekt = "1.23.8"
 # ===== COMPOSE & UI =====
 compose = "1.9.0"       # Latest Compose version
 composeBom = "2025.07.00"  # Latest 2025 Compose BOM from Dependabot
-composeCompiler = "1.9.0"  # Latest Compose Compiler 1.9+
+composeCompiler = "1.5.15"  # Compatible Compose Compiler for Kotlin 2.2.0
 activityCompose = "1.10.1"  # Latest from Dependabot
 material3 = "1.1.2"
+material = "1.12.0"      # Latest stable Material Design
 
 # ===== GOOGLE SERVICES =====
-googleServices = "4.4.2"
-firebaseBom = "33.7.0"  # Latest Firebase BOM
-firebaseCrashlytics = "3.0.2"  # Latest Firebase Crashlytics
+firebaseBom = "34.0.0"  # Latest stable Firebase BOM with 100+ APIs
+firebaseCrashlytics = "3.0.5"  # Latest Firebase Crashlytics
 firebasePerf = "2.0.0"  # Latest Firebase Performance
 
 # ===== DEPENDENCY INJECTION & ANNOTATION PROCESSING =====
-hilt = "2.57"           # Latest Hilt with KSP 2 compatibility
 dagger = "2.57"         # Latest Dagger matching Hilt
 
 # ===== DATABASE & PERSISTENCE =====
@@ -55,15 +57,18 @@ navigation = "2.9.3"    # Latest navigation
 retrofit = "3.0.0"      # Latest Retrofit with kotlinx-serialization support
 okhttp = "5.1.0"       # Stable OkHttp
 kotlinxSerialization = "1.9.0"  # Stable serialization
-
-# ===== ASYNC & COROUTINES =====
 kotlinxCoroutines = "1.10.2"  # Stable coroutines
 
 # ===== UTILITIES =====
 timber = "5.0.1"
 coilCompose = "2.7.0"           # Stable
 coreLibraryDesugaring = "2.1.5"   # Stable
-protobufDesugaring = "3.21.12"   # Stable protobuf
+protobufDesugaring = "4.31.1"   # Stable protobuf
+
+# ===== SECURITY & CRYPTO =====
+bouncycastle = "1.81"    # Latest stable version with Java 24 support
+tink = "1.18.0"         # Google Tink crypto library - stable version
+androidxSecurity = "1.1.0"  # AndroidX Security Crypto - stable version
 
 # ===== TESTING =====
 junit = "5.13.4"        # Latest JUnit
@@ -84,15 +89,14 @@ openapi-generator = "7.14.0"
 # ===== XPOSED FRAMEWORK =====
 xposed = "82"
 lsposed = "1.9.2"       # Available LibXposed version
-yuki = "1.2.0"
+yuki = "1.3.0"
 
 # ===== LEGACY COMPATIBILITY =====
-accompanist = "0.34.0"
+accompanist = "0.37.3"
 appcompat = "1.7.0"     # Stable
 coreKtx = "1.16.0"      # Stable
-animatedVectorDrawable = "1.1.0"  # Stable
-appcompatV7 = "1.7.0"   # Stable
-design = "1.12.0"       # Stable
+animatedVectorDrawable = "1.2.0"  # Stable
+appcompatV7 = "1.7.1"   # Stable
 
 [plugins]
 # ===== ANDROID PLUGINS =====
@@ -120,7 +124,7 @@ spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 
 # ===== API GENERATION =====
-openapi-generator = { id = "org.openapi.generator", version.ref = "openapi-generator" }
+openapi-generator = { id = "org.openapi.generator", version.ref = "openApiGenerator" }
 
 # ===== DESUGARING =====
 coreLibraryDesugaring = { id = "com.android.tools.desugar", version.ref = "coreLibraryDesugaring" }
@@ -128,15 +132,17 @@ coreLibraryDesugaring = { id = "com.android.tools.desugar", version.ref = "coreL
 [libraries]
 # ===== ANDROIDX CORE =====
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
-androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version = "1.7.0" }
-androidx-material = { group = "com.google.android.material", name = "material", version = "1.12.0" }
-androidx-recyclerview = { group = "androidx.recyclerview", name = "recyclerview", version = "1.3.2" }
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+androidx-material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+androidx-recyclerview = { group = "androidx.recyclerview", name = "recyclerview", version = "1.4.0" }
 androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycle" }
 androidx-lifecycle-viewmodel-ktx = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycle" }
 androidx-lifecycle-viewmodel-compose = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "lifecycle" }
 androidx-lifecycle-livedata-ktx = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "lifecycle" }
 androidx-lifecycle-viewmodel-savedstate = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-savedstate", version.ref = "lifecycle" }
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
+androidx-appcompat-v7 = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompatV7" }
+androidx-design = { group = "com.google.android.material", name = "material", version.ref = "material" }
 
 # ===== COMPOSE BOM AND UI =====
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
@@ -146,7 +152,7 @@ androidx-compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-toolin
 androidx-compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
 androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3" }
 androidx-compose-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
-androidx-compose-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
+androidx-compose-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest", version = "1.9.0-rc01" }
 
 # ===== NAVIGATION =====
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version = "2.9.3" }
@@ -163,8 +169,6 @@ retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = 
 retrofit-converter-kotlinx-serialization = { group = "com.squareup.retrofit2", name = "converter-kotlinx-serialization", version.ref = "retrofit" }
 okhttp3-logging-interceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp" }
 kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinxSerialization" }
-
-# ===== COROUTINES =====
 kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlinxCoroutines" }
 kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "kotlinxCoroutines" }
 
@@ -173,6 +177,13 @@ timber = { group = "com.jakewharton.timber", name = "timber", version.ref = "tim
 coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coilCompose" }
 coreLibraryDesugaring = { group = "com.android.tools", name = "desugar_jdk_libs", version.ref = "coreLibraryDesugaring" }
 protobuf-desugaring = { group = "com.google.protobuf", name = "protobuf-javalite", version.ref = "protobufDesugaring" }
+bouncycastle = { group = "org.bouncycastle", name = "bcprov-jdk18on", version.ref = "bouncycastle" }
+tink = { group = "com.google.crypto.tink", name = "tink-android", version.ref = "tink" }
+androidxSecurity = { group = "androidx.security", name = "security-crypto", version.ref = "androidxSecurity" }
+conscrypt-android = { group = "org.conscrypt", name = "conscrypt-android", version = "2.5.3" }
+animated-vector-drawable = { group = "androidx.vectordrawable", name = "vectordrawable-animated", version.ref = "animatedVectorDrawable" }
+appcompat-v7 = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompatV7" }
+design = { group = "com.google.android.material", name = "material", version.ref = "material" }
 
 # ===== ROOM DATABASE =====
 room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "roomVersion" }
@@ -180,9 +191,9 @@ room-compiler = { group = "androidx.room", name = "room-compiler", version.ref =
 room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "roomVersion" }
 
 # ===== TESTING =====
-junit = { group = "junit", name = "junit", version = "5.13.4" }
-junit-jupiter = { group = "org.junit.jupiter", name = "junit-jupiter", version = "5.13.4" }
-junit-engine = { group = "org.junit.jupiter", name = "junit-jupiter-engine", version = "5.13.4" }
+junit = { group = "org.junit.jupiter", name = "junit-jupiter", version.ref = "junit" }
+junit-jupiter = { group = "org.junit.jupiter", name = "junit-jupiter", version.ref = "junitJupiter" }
+junit-engine = { group = "org.junit.jupiter", name = "junit-jupiter-engine", version.ref = "junitJupiter" }
 androidx-test-ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "extJunit" }
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso" }
 mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
@@ -195,13 +206,8 @@ leakcanary-android = { group = "com.squareup.leakcanary", name = "leakcanary-and
 
 # ===== FIREBASE =====
 firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebaseBom" }
-firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics-ktx" }
-firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics-ktx" }
-firebase-performance = { group = "com.google.firebase", name = "firebase-perf-ktx" }
-firebase-messaging = { group = "com.google.firebase", name = "firebase-messaging-ktx" }
-firebase-auth = { group = "com.google.firebase", name = "firebase-auth-ktx" }
-firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore-ktx" }
-firebase-storage = { group = "com.google.firebase", name = "firebase-storage-ktx" }
+firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics-ktx", version = "22.1.2" }
+firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics-ktx", version = "19.2.1" }
 
 # ===== XPOSED FRAMEWORK =====
 xposed-api = { group = "de.robv.android.xposed", name = "api", version.ref = "xposed" }
@@ -217,13 +223,9 @@ accompanist-permissions = { group = "com.google.accompanist", name = "accompanis
 accompanist-navigation-animation = { group = "com.google.accompanist", name = "accompanist-navigation-animation", version.ref = "accompanist" }
 
 # ===== COMPRESSION & I/O =====
-commons-io = { group = "commons-io", name = "commons-io", version = "2.15.1" }
-commons-compress = { group = "org.apache.commons", name = "commons-compress", version = "1.25.0" }
-xz = { group = "org.tukaani", name = "xz", version = "1.9" }
-conscrypt-android = { group = "org.conscrypt", name = "conscrypt-android", version = "2.5.2" }
-animated-vector-drawable = { group = "androidx.vectordrawable", name = "vectordrawable-animated", version.ref = "animatedVectorDrawable" }
-appcompat-v7 = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompatV7" }
-design = { group = "com.google.android.material", name = "material", version.ref = "design" }
+commons-io = { group = "commons-io", name = "commons-io", version = "2.20.0" }
+commons-compress = { group = "org.apache.commons", name = "commons-compress", version = "1.28.0" }
+xz = { group = "org.tukaani", name = "xz", version = "1.10" }
 
 [bundles]
 # ===== COMPOSE UI =====
@@ -239,7 +241,9 @@ network = [
     "retrofit",
     "retrofit-converter-kotlinx-serialization",
     "okhttp3-logging-interceptor",
-    "kotlinx-serialization-json"
+    "kotlinx-serialization-json",
+    "kotlinx-coroutines-core",
+    "kotlinx-coroutines-android"
 ]
 
 # ===== COROUTINES =====
@@ -260,12 +264,7 @@ testing = [
 # ===== FIREBASE =====
 firebase = [
     "firebase-analytics",
-    "firebase-crashlytics", 
-    "firebase-performance",
-    "firebase-messaging",
-    "firebase-auth",
-    "firebase-firestore",
-    "firebase-storage"
+    "firebase-crashlytics"
 ]
 
 # ===== XPOSED FRAMEWORK =====
